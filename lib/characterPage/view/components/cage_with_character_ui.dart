@@ -1,3 +1,4 @@
+import 'package:app_d/characterPage/utils/character.dart';
 import 'package:flutter/material.dart';
 
 import 'cage_with_character.dart';
@@ -30,8 +31,8 @@ class CageWithCharacterUI extends StatelessWidget {
                 top: uiState.topPosition,
                 left: uiState.leftPosition,
                 child: Container(
-                  width: uiState.characterSize,
-                  height: uiState.characterSize,
+                  width: uiState.character.size,
+                  height: uiState.character.size,
                   color: Colors.red,
                 ),
               ),
@@ -47,12 +48,12 @@ class CageWithCharacterUIState {
   final double topPosition;
   final double leftPosition;
   late double cageSize;
-  final double characterSize;
+  final Character character;
 
   CageWithCharacterUIState({
     required this.topPosition,
     required this.leftPosition,
     required this.cageSize,
-    required this.characterSize,
+    required this.character,
   });
 }

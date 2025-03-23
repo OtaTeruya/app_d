@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 
+import '../../utils/character.dart';
 import 'cage_with_character_ui.dart';
 
 class CageWithCharacter extends StatefulWidget {
@@ -17,7 +18,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   late double topPosition;
   late double leftPosition;
   late double cageSize;
-  final double characterSize = 20;
+  final Character character = Character();
   late Timer _timer;
 
   @override
@@ -36,8 +37,8 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
         double newL = _randomPosition();
         double squaredDist = (pow(newT - topPosition, 2) + pow(newL - leftPosition, 2)).toDouble();
 
-        if (pow(characterSize * 2, 2) < squaredDist && squaredDist < pow(characterSize * 6, 2)) {
-          //characterSizeの2~6倍の距離を移動するならOK
+        if (pow(character.minDist, 2) < squaredDist && squaredDist < pow(character.maxDist, 2)) {
+          //minDist~maxDistの距離を移動するならOK
           setState(() {
             topPosition = newT;
             leftPosition = newL;
@@ -50,7 +51,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
 
   // ランダムな位置を生成
   double _randomPosition() {
-    return Random().nextDouble() * (cageSize - characterSize);
+    return Random().nextDouble() * (cageSize - character.size);
   }
 
   @override
@@ -62,13 +63,13 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   @override
   void cageTapped(Offset tappedPosition) {
     // タップ位置に基づいて位置を更新
-    double newT = tappedPosition.dy - (characterSize / 2);
-    double newL = tappedPosition.dx - (characterSize / 2);
+    double newT = tappedPosition.dy - (character.size / 2);
+    double newL = tappedPosition.dx - (character.size / 2);
 
     // cageの範囲を超えないように制限
     setState(() {
-      topPosition = newT.clamp(0, cageSize - characterSize);
-      leftPosition = newL.clamp(0, cageSize - characterSize);
+      topPosition = newT.clamp(0, cageSize - character.size);
+      leftPosition = newL.clamp(0, cageSize - character.size);
     });
   }
 
@@ -79,7 +80,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
             topPosition: topPosition,
             leftPosition: leftPosition,
             cageSize: cageSize,
-            characterSize: characterSize
+            character: character
         ),
         callback: this
     );
