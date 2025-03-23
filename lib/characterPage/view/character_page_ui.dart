@@ -1,3 +1,4 @@
+import 'package:app_d/characterPage/view/components/cage_with_character.dart';
 import 'package:flutter/material.dart';
 
 import '../../custom_app_bar.dart';
@@ -23,7 +24,8 @@ class CharacterPageUI extends StatelessWidget {
                   TextButton(
                       onPressed: () => callback.moveToHomePage(context),
                       child: Text('HomePageへ')
-                  )
+                  ),
+                  CageWithCharacter(cageSize: MediaQuery.of(context).size.width-64)
                 ]
             )
         )
