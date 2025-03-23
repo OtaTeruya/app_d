@@ -8,7 +8,8 @@ import 'cage_with_character_ui.dart';
 
 class CageWithCharacter extends StatefulWidget {
   final double cageSize;
-  const CageWithCharacter({super.key, required this.cageSize});
+  final Character character;
+  const CageWithCharacter({super.key, required this.cageSize, required this.character});
 
   @override
   State<CageWithCharacter> createState() => _CageWithCharacter();
@@ -18,13 +19,14 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   late double topPosition;
   late double leftPosition;
   late double cageSize;
-  final Character character = Character();
+  late Character character;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     cageSize = widget.cageSize;
+    character = widget.character;
 
     //初期位置の決定
     topPosition = _randomPosition();

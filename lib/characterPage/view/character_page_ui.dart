@@ -1,4 +1,6 @@
+import 'package:app_d/characterPage/utils/character.dart';
 import 'package:app_d/characterPage/view/components/cage_with_character.dart';
+import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../custom_app_bar.dart';
@@ -25,7 +27,11 @@ class CharacterPageUI extends StatelessWidget {
                       onPressed: () => callback.moveToHomePage(context),
                       child: Text('HomePageへ')
                   ),
-                  CageWithCharacter(cageSize: MediaQuery.of(context).size.width-64)
+                  CageWithCharacter(
+                    cageSize: MediaQuery.of(context).size.width-40,
+                    character: uiState.chosenCharacter,
+                  ),
+                  CharacterProfile(character: uiState.chosenCharacter)
                 ]
             )
         )
@@ -34,11 +40,9 @@ class CharacterPageUI extends StatelessWidget {
 }
 
 class CharacterPageUIState {
-  final int uiNoZyoutai1;
-  final String uiNoZyoutai2;
+  final Character chosenCharacter;
 
   CharacterPageUIState({
-    required this.uiNoZyoutai1,
-    required this.uiNoZyoutai2
+    required this.chosenCharacter
   });
 }
