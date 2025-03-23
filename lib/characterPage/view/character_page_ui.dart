@@ -1,5 +1,6 @@
 import 'package:app_d/characterPage/utils/character.dart';
 import 'package:app_d/characterPage/view/components/cage_with_character.dart';
+import 'package:app_d/characterPage/view/components/character_list.dart';
 import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 
@@ -21,17 +22,33 @@ class CharacterPageUI extends StatelessWidget {
     return Scaffold(
         appBar: CustomAppBar(title: 'CharacterPage'),
         body:Center(
-            child: Column(
+            child: Stack(
                 children: [
-                  TextButton(
-                      onPressed: () => callback.moveToHomePage(context),
-                      child: Text('HomePageへ')
+                  Column(
+                      children: [
+                        TextButton(
+                            onPressed: () => callback.moveToHomePage(context),
+                            child: Text('HomePageへ')
+                        ),
+                        TextButton(
+                            onPressed: () => callback.showCharacterListUI(),
+                            child: Text('CharacterListUIの表示')
+                        ),
+                        CageWithCharacter(
+                          cageSize: MediaQuery.of(context).size.width-40,
+                          character: uiState.chosenCharacter,
+                        ),
+                        CharacterProfile(character: uiState.chosenCharacter)
+                      ]
                   ),
-                  CageWithCharacter(
-                    cageSize: MediaQuery.of(context).size.width-40,
-                    character: uiState.chosenCharacter,
-                  ),
-                  CharacterProfile(character: uiState.chosenCharacter)
+                  
+                  Visibility(
+                      visible: uiState.isCharacterListUIVisible,
+                      child: CharacterList(
+                          chosenCharacter: uiState.chosenCharacter,
+                          callback: callback
+                      )
+                  )
                 ]
             )
         )
@@ -41,8 +58,10 @@ class CharacterPageUI extends StatelessWidget {
 
 class CharacterPageUIState {
   final Character chosenCharacter;
+  final bool isCharacterListUIVisible;
 
   CharacterPageUIState({
-    required this.chosenCharacter
+    required this.chosenCharacter,
+    required this.isCharacterListUIVisible
   });
 }

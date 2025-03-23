@@ -33,7 +33,7 @@ class CageWithCharacterUI extends StatelessWidget {
                 child: Container(
                   width: uiState.character.size,
                   height: uiState.character.size,
-                  color: Colors.red,
+                  color: uiState.character.color,
                 ),
               ),
             ],
@@ -47,7 +47,7 @@ class CageWithCharacterUI extends StatelessWidget {
 class CageWithCharacterUIState {
   final double topPosition;
   final double leftPosition;
-  late double cageSize;
+  final double cageSize;
   final Character character;
 
   CageWithCharacterUIState({

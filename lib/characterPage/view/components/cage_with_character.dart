@@ -19,14 +19,12 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   late double topPosition;
   late double leftPosition;
   late double cageSize;
-  late Character character;
   late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     cageSize = widget.cageSize;
-    character = widget.character;
 
     //初期位置の決定
     topPosition = _randomPosition();
@@ -39,7 +37,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
         double newL = _randomPosition();
         double squaredDist = (pow(newT - topPosition, 2) + pow(newL - leftPosition, 2)).toDouble();
 
-        if (pow(character.minDist, 2) < squaredDist && squaredDist < pow(character.maxDist, 2)) {
+        if (pow(widget.character.minDist, 2) < squaredDist && squaredDist < pow(widget.character.maxDist, 2)) {
           //minDist~maxDistの距離を移動するならOK
           setState(() {
             topPosition = newT;
@@ -53,7 +51,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
 
   // ランダムな位置を生成
   double _randomPosition() {
-    return Random().nextDouble() * (cageSize - character.size);
+    return Random().nextDouble() * (cageSize - widget.character.size);
   }
 
   @override
@@ -65,13 +63,13 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   @override
   void cageTapped(Offset tappedPosition) {
     // タップ位置に基づいて位置を更新
-    double newT = tappedPosition.dy - (character.size / 2);
-    double newL = tappedPosition.dx - (character.size / 2);
+    double newT = tappedPosition.dy - (widget.character.size / 2);
+    double newL = tappedPosition.dx - (widget.character.size / 2);
 
     // cageの範囲を超えないように制限
     setState(() {
-      topPosition = newT.clamp(0, cageSize - character.size);
-      leftPosition = newL.clamp(0, cageSize - character.size);
+      topPosition = newT.clamp(0, cageSize - widget.character.size);
+      leftPosition = newL.clamp(0, cageSize - widget.character.size);
     });
   }
 
@@ -82,7 +80,7 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
             topPosition: topPosition,
             leftPosition: leftPosition,
             cageSize: cageSize,
-            character: character
+            character: widget.character
         ),
         callback: this
     );

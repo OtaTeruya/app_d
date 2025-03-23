@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
+
 class Character {
+  final int id;
   final String name;
-  final String imagePath;
+  final Color color;
   final int level;
   final int maxLevel;
   final double size;
@@ -8,12 +11,13 @@ class Character {
   final double maxDist;
 
   Character({
-    this.name = "あかしかく",
-    this.imagePath = "",
-    this.level = 1,
-    this.maxLevel = 10,
-    this.size = 30.0,
-    this.minDist = 60.0,
-    this.maxDist = 180.0,
+    required this.id,
+    required this.name,
+    required this.color,
+    required this.level,
+    required this.maxLevel,
+    required this.size,
+    required this.minDist,
+    required this.maxDist,
   });
 }

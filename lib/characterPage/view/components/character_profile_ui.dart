@@ -23,7 +23,7 @@ class CharacterProfileUI extends StatelessWidget {
             Container(
               width: 64,
               height: 64,
-              color: Colors.red,
+              color: uiState.character.color,
             ),
             SizedBox(width: 12),
             Expanded(
