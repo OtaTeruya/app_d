@@ -30,10 +30,22 @@ class CageWithCharacterUI extends StatelessWidget {
                 duration: const Duration(milliseconds: 1000),
                 top: uiState.topPosition,
                 left: uiState.leftPosition,
-                child: Container(
-                  width: uiState.character.size,
-                  height: uiState.character.size,
-                  color: uiState.character.color,
+                child: GestureDetector(
+                  onTap: callback.characterTapped,
+                  child: AnimatedBuilder(
+                    animation: uiState.rotationController,
+                    builder: (context, child) {
+                      return Transform.rotate(
+                        angle: uiState.rotationController.value * 2 * 3.1415,
+                        child: child,
+                      );
+                    },
+                    child: Container(
+                      width: uiState.character.size,
+                      height: uiState.character.size,
+                      color: uiState.character.color,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -49,11 +61,13 @@ class CageWithCharacterUIState {
   final double leftPosition;
   final double cageSize;
   final Character character;
+  final AnimationController rotationController;
 
   CageWithCharacterUIState({
     required this.topPosition,
     required this.leftPosition,
     required this.cageSize,
     required this.character,
+    required this.rotationController
   });
 }

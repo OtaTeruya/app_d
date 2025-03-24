@@ -15,11 +15,15 @@ class CageWithCharacter extends StatefulWidget {
   State<CageWithCharacter> createState() => _CageWithCharacter();
 }
 
-class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCharacterCallback {
+class _CageWithCharacter
+    extends State<CageWithCharacter>
+    with SingleTickerProviderStateMixin
+    implements CageWithCharacterCallback {
   late double topPosition;
   late double leftPosition;
   late double cageSize;
   late Timer _timer;
+  late AnimationController _rotationController;
 
   @override
   void initState() {
@@ -47,17 +51,18 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
         }
       }
     });
+
+
+    // AnimationControllerの初期化
+    _rotationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 750),
+    );
   }
 
   // ランダムな位置を生成
   double _randomPosition() {
     return Random().nextDouble() * (cageSize - widget.character.size);
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
   }
 
   @override
@@ -74,13 +79,27 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
   }
 
   @override
+  void characterTapped() {
+    // 回転アニメーションを実行
+    _rotationController.forward(from: 0.0);
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _rotationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CageWithCharacterUI(
         uiState: CageWithCharacterUIState(
             topPosition: topPosition,
             leftPosition: leftPosition,
             cageSize: cageSize,
-            character: widget.character
+            character: widget.character,
+            rotationController: _rotationController
         ),
         callback: this
     );
@@ -89,4 +108,5 @@ class _CageWithCharacter extends State<CageWithCharacter> implements CageWithCha
 
 abstract class CageWithCharacterCallback {
   void cageTapped(Offset tappedPosition);
+  void characterTapped();
 }
