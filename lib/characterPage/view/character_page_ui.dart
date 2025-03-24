@@ -26,13 +26,35 @@ class CharacterPageUI extends StatelessWidget {
                 children: [
                   Column(
                       children: [
-                        TextButton(
-                            onPressed: () => callback.moveToHomePage(context),
-                            child: Text('HomePageへ')
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              TextButton(
+                                  onPressed: () => callback.moveToHomePage(context),
+                                  child: Text('HomePageへ')
+                              ),
+                              Spacer(),
+                              Image.asset(
+                                "images/hamburger.png",
+                                width: 32,
+                                height: 32,
+                              ),
+                              Text(
+                                  "× ${uiState.foodCount}",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black
+                                  )
+                              ),
+                            ],
+                          ),
                         ),
                         CageWithCharacter(
                           cageSize: MediaQuery.of(context).size.width-40,
                           character: uiState.chosenCharacter,
+                          callback: callback
                         ),
                         Container(
                           padding: const EdgeInsets.all(20),
@@ -43,7 +65,7 @@ class CharacterPageUI extends StatelessWidget {
                         )
                       ]
                   ),
-                  
+
                   Visibility(
                       visible: uiState.isCharacterListUIVisible,
                       child: CharacterList(
@@ -60,10 +82,12 @@ class CharacterPageUI extends StatelessWidget {
 
 class CharacterPageUIState {
   final Character chosenCharacter;
+  final int foodCount;
   final bool isCharacterListUIVisible;
 
   CharacterPageUIState({
     required this.chosenCharacter,
+    required this.foodCount,
     required this.isCharacterListUIVisible
   });
 }
