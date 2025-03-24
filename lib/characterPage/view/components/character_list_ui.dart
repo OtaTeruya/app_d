@@ -2,13 +2,13 @@ import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/character.dart';
-import '../../utils/character_data.dart';
+import '../../utils/character_manager.dart';
 import 'character_list.dart';
 
 class CharacterListUI extends StatelessWidget {
   final CharacterListUIState uiState;
   final CharacterListCallback callback;
-  final CharacterData characterData = CharacterData();
+  final CharacterManager characterData = CharacterManager();
 
   CharacterListUI({
     super.key,
