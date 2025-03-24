@@ -1,9 +1,7 @@
-import 'package:flutter/material.dart';
-
 class Character {
   final int id;
   final String name;
-  final Color color;
+  final String imagePath;
   final int level;
   final int maxLevel;
   final double size;
@@ -13,7 +11,7 @@ class Character {
   Character({
     required this.id,
     required this.name,
-    required this.color,
+    required this.imagePath,
     required this.level,
     required this.maxLevel,
     required this.size,

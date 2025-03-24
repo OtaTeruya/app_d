@@ -34,10 +34,10 @@ class CharacterProfileUI extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              Image.asset(
+                uiState.character.imagePath,
                 width: 64,
                 height: 64,
-                color: uiState.character.color,
               ),
               SizedBox(width: 12),
               Expanded(

@@ -40,10 +40,10 @@ class CageWithCharacterUI extends StatelessWidget {
                         child: child,
                       );
                     },
-                    child: Container(
+                    child: Image.asset(
+                      uiState.character.imagePath,
                       width: uiState.character.size,
                       height: uiState.character.size,
-                      color: uiState.character.color,
                     ),
                   ),
                 ),
