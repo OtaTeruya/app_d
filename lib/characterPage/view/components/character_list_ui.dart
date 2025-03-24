@@ -2,13 +2,13 @@ import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/character.dart';
-import '../../utils/character_data.dart';
+import '../../utils/character_manager.dart';
 import 'character_list.dart';
 
 class CharacterListUI extends StatelessWidget {
   final CharacterListUIState uiState;
   final CharacterListCallback callback;
-  final CharacterData characterData = CharacterData();
+  final CharacterManager characterData = CharacterManager();
 
   CharacterListUI({
     super.key,
@@ -30,12 +30,13 @@ class CharacterListUI extends StatelessWidget {
               Expanded(
                   child: ListView(
                       children: [
-                        for (var character in characterData.getCharacters())
+                        for (var character in uiState.characters)
                           ListTile(
                               title: Opacity(
                                   opacity: uiState.chosenCharacter.id == character.id ? 1.0 : 0.3,
                                   child: CharacterProfile(
                                       character: character,
+                                      characterLevel: character.level,
                                       onClick: () => callback.chooseCharacter(character)
                                   )
                               )
@@ -51,8 +52,10 @@ class CharacterListUI extends StatelessWidget {
 
 class CharacterListUIState {
   final Character chosenCharacter;
+  final List<Character> characters;
 
   CharacterListUIState({
     required this.chosenCharacter,
+    required this.characters
   });
 }

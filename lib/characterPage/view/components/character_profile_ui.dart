@@ -34,10 +34,10 @@ class CharacterProfileUI extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
+              Image.asset(
+                uiState.character.imagePath,
                 width: 64,
                 height: 64,
-                color: uiState.character.color,
               ),
               SizedBox(width: 12),
               Expanded(
@@ -55,7 +55,7 @@ class CharacterProfileUI extends StatelessWidget {
                               )
                           ),
                           Text(
-                              "${uiState.character.level}/${uiState.character.maxLevel}",
+                              "${uiState.characterLevel}/${uiState.character.maxLevel}",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.black
@@ -64,7 +64,7 @@ class CharacterProfileUI extends StatelessWidget {
                         ],
                       ),
                       LinearProgressIndicator(
-                        value: uiState.character.level/uiState.character.maxLevel,
+                        value: uiState.characterLevel/uiState.character.maxLevel,
                         backgroundColor: Colors.black12,
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                         minHeight: 8,
@@ -81,8 +81,10 @@ class CharacterProfileUI extends StatelessWidget {
 
 class CharacterProfileUIState {
   final Character character;
+  final int characterLevel;
 
   CharacterProfileUIState({
     required this.character,
+    required this.characterLevel
   });
 }

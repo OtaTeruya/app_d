@@ -26,7 +26,19 @@ class CageWithCharacterUI extends StatelessWidget {
           color: Colors.blue[50],
           child: Stack(
             children: [
-              AnimatedPositioned(
+              Visibility(
+                  visible: uiState.isFeeding,
+                  child: Positioned(//食べ物の位置を管理
+                    top: uiState.foodTopPosition,
+                    left: uiState.foodLeftPosition,
+                    child: Image.asset(
+                      "images/hamburger.png",
+                      width: 32,
+                      height: 32,
+                    ),
+                  )
+              ),
+              AnimatedPositioned(//キャラクターの位置を管理
                 duration: const Duration(milliseconds: 1000),
                 top: uiState.topPosition,
                 left: uiState.leftPosition,
@@ -40,10 +52,10 @@ class CageWithCharacterUI extends StatelessWidget {
                         child: child,
                       );
                     },
-                    child: Container(
+                    child: Image.asset(
+                      uiState.character.imagePath,
                       width: uiState.character.size,
                       height: uiState.character.size,
-                      color: uiState.character.color,
                     ),
                   ),
                 ),
@@ -61,6 +73,9 @@ class CageWithCharacterUIState {
   final double leftPosition;
   final double cageSize;
   final Character character;
+  final bool isFeeding;
+  final double foodTopPosition;
+  final double foodLeftPosition;
   final AnimationController rotationController;
 
   CageWithCharacterUIState({
@@ -68,6 +83,9 @@ class CageWithCharacterUIState {
     required this.leftPosition,
     required this.cageSize,
     required this.character,
+    required this.isFeeding,
+    required this.foodTopPosition,
+    required this.foodLeftPosition,
     required this.rotationController
   });
 }

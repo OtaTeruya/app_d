@@ -1,5 +1,6 @@
-import 'package:app_d/characterPage/utils/character_data.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:app_d/characterPage/utils/character_manager.dart';
+import 'package:app_d/characterPage/utils/food_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../utils/character.dart';
@@ -13,12 +14,54 @@ class CharacterPage extends StatefulWidget {
 }
 
 class _CharacterPage extends State<CharacterPage> implements CharacterPageCallback {
-  Character chosenCharacter = CharacterData().getCharacters()[0];
+  Character? chosenCharacter;
+  int? chosenCharacterLevel;
+  int? foodCount;
   bool isCharacterListUIVisible = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadChosenCharacter();
+    _loadFoodCount();
+  }
+
+  Future<void> _loadChosenCharacter() async {
+    final character = await CharacterManager().loadChosenCharacter();
+    setState(() {
+      chosenCharacter = character;
+      chosenCharacterLevel = character.level;
+    });
+  }
+
+  Future<void> _loadFoodCount() async {
+    final cnt = await FoodManager().loadFoodCount();
+    setState(() {
+      foodCount = cnt;
+    });
+  }
 
   @override
   void moveToHomePage(BuildContext context) {
     context.go('/homePage');
+  }
+
+  @override
+  bool feedingFood() {
+    if (foodCount == null || chosenCharacter == null || chosenCharacterLevel == null) {
+      return false;
+    }
+    if (foodCount! <= 0) {
+      return false;
+    }
+
+    FoodManager().subtractSavedFoodCount();
+    CharacterManager().addSavedCharacterLevel(chosenCharacter!.id);
+    setState(() {
+      foodCount = foodCount! - 1;
+      chosenCharacterLevel = chosenCharacterLevel! + 1;
+    });
+    return true;
   }
 
   @override
@@ -37,16 +80,24 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
 
   @override
   void chooseCharacter(Character character) {
+    CharacterManager().saveChosenCharacter(character);
     setState(() {
       chosenCharacter = character;
+      chosenCharacterLevel = character.level;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (chosenCharacter == null || foodCount == null) {
+      return Center(child: CircularProgressIndicator());
+    }
+
     return CharacterPageUI(
         uiState: CharacterPageUIState(
-            chosenCharacter: chosenCharacter,
+            chosenCharacter: chosenCharacter!,
+            chosenCharacterLevel: chosenCharacterLevel!,
+            foodCount: foodCount!,
             isCharacterListUIVisible: isCharacterListUIVisible
         ),
         callback: this
@@ -56,6 +107,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
 
 abstract class CharacterPageCallback {
   void moveToHomePage(BuildContext context);
+  bool feedingFood();
   void showCharacterListUI();
   void hideCharacterListUI();
   void chooseCharacter(Character character);
