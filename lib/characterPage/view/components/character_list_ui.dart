@@ -1,5 +1,4 @@
 import 'package:app_d/characterPage/view/components/character_profile.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/character.dart';
@@ -21,7 +20,7 @@ class CharacterListUI extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         color: Colors.white,
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(vertical: 16),
         child: Column(
             children: [
               TextButton(
@@ -33,11 +32,11 @@ class CharacterListUI extends StatelessWidget {
                       children: [
                         for (var character in characterData.getCharacters())
                           ListTile(
-                              title: GestureDetector(
-                                  onTap: () {callback.chooseCharacter(character);},
-                                  child: Opacity(
-                                      opacity: uiState.chosenCharacter.id == character.id ? 1.0 : 0.5,
-                                      child: CharacterProfile(character: character)
+                              title: Opacity(
+                                  opacity: uiState.chosenCharacter.id == character.id ? 1.0 : 0.3,
+                                  child: CharacterProfile(
+                                      character: character,
+                                      onClick: () => callback.chooseCharacter(character)
                                   )
                               )
                           ),

@@ -5,13 +5,19 @@ import 'character_profile_ui.dart';
 
 class CharacterProfile extends StatefulWidget {
   final Character character;
-  const CharacterProfile({super.key, required this.character});
+  final void Function() onClick;
+  const CharacterProfile({super.key, required this.character, required this.onClick});
 
   @override
   State<CharacterProfile> createState() => _CharacterProfile();
 }
 
 class _CharacterProfile extends State<CharacterProfile> implements CharacterProfileCallback {
+  @override
+  void onClick() {
+    widget.onClick();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CharacterProfileUI(
@@ -22,4 +28,5 @@ class _CharacterProfile extends State<CharacterProfile> implements CharacterProf
 }
 
 abstract class CharacterProfileCallback {
+  void onClick();
 }

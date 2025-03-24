@@ -30,15 +30,17 @@ class CharacterPageUI extends StatelessWidget {
                             onPressed: () => callback.moveToHomePage(context),
                             child: Text('HomePageへ')
                         ),
-                        TextButton(
-                            onPressed: () => callback.showCharacterListUI(),
-                            child: Text('CharacterListUIの表示')
-                        ),
                         CageWithCharacter(
                           cageSize: MediaQuery.of(context).size.width-40,
                           character: uiState.chosenCharacter,
                         ),
-                        CharacterProfile(character: uiState.chosenCharacter)
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          child: CharacterProfile(
+                            character: uiState.chosenCharacter,
+                            onClick: () => callback.showCharacterListUI(),
+                          ),
+                        )
                       ]
                   ),
                   
