@@ -39,8 +39,8 @@ class CapturePageUI extends StatelessWidget {
               ),
               //帰らせる
               TextButton(
-                onPressed: () => callback.moveToHistoryPage(context),
-                child: Text('HistoryPageへ'),
+                onPressed: () => callback.moveToHomePage(context),
+                child: Text('HomePageへ'),
               ),
             ],
           ),
