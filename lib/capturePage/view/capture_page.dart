@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,6 +14,13 @@ class CapturePage extends StatefulWidget {
 class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   int uiNoZyoutai1 = 0;
   String uiNoZyoutai2 = 'hoge';
+  CameraDescription? camera;
+
+  @override
+  void initState() {
+    super.initState();
+    setCamera();
+  }
 
   @override
   void moveToHomePage(BuildContext context) {
@@ -25,17 +33,33 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   }
 
   @override
-  void uiNoZyotaiWoHenkouSuruKansu() {//例です。好きな処理や名前に変えてください。
+  void setCamera() async {  //カメラの設定
+    // デバイスで使用可能なカメラのリストを取得
+    final cameras = await availableCameras();
+    if (cameras.isEmpty) {
+      setState(() {
+        camera = null;
+      });
+      return;
+    }
+    // 利用可能なカメラのリストから特定のカメラを取得
+    final firstCamera = cameras.first;
+    // 取得できているか確認
+    print(firstCamera);
     setState(() {
-      uiNoZyoutai1 = 1;
+      camera = firstCamera;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return CapturePageUI(
-        uiState: CapturePageUIState(uiNoZyoutai1: uiNoZyoutai1, uiNoZyoutai2: uiNoZyoutai2),
-        callback: this
+      uiState: CapturePageUIState(
+        uiNoZyoutai1: uiNoZyoutai1,
+        uiNoZyoutai2: uiNoZyoutai2,
+      ),
+      callback: this,
+      camera: camera,
     );
   }
 }
@@ -43,5 +67,5 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
 abstract class CapturePageCallback {
   void moveToHomePage(BuildContext context);
   void moveToHistoryPage(BuildContext context);
-  void uiNoZyotaiWoHenkouSuruKansu();
+  void setCamera();
 }

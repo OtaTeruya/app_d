@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>この機能では、食事の撮影のためにカメラを使用します。カメラのアクセスを許可しない場合、ご利用いただけません。</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>マイクを使う理由・用途を記述（ここをちゃんと書かないと、Appleのレビューでリジェクトされます）</string>
 </dict>
 </plist>
