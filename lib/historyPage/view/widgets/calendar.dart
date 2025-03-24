@@ -13,6 +13,7 @@ class Calendar extends StatelessWidget {
           firstDay: DateTime.utc(2024, 1, 1),
           lastDay: DateTime.utc(2050, 1, 1),
           focusedDay: _selectedDate.value,
+          locale: 'ja_JP',
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDate.value, day);
           },
