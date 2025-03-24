@@ -1,6 +1,8 @@
+import 'package:app_d/characterPage/utils/character_data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
+import '../utils/character.dart';
 import 'character_page_ui.dart';
 
 class CharacterPage extends StatefulWidget {
@@ -11,8 +13,8 @@ class CharacterPage extends StatefulWidget {
 }
 
 class _CharacterPage extends State<CharacterPage> implements CharacterPageCallback {
-  int uiNoZyoutai1 = 0;
-  String uiNoZyoutai2 = 'hoge';
+  Character chosenCharacter = CharacterData().getCharacters()[0];
+  bool isCharacterListUIVisible = false;
 
   @override
   void moveToHomePage(BuildContext context) {
@@ -20,16 +22,33 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
   }
 
   @override
-  void uiNoZyotaiWoHenkouSuruKansu() {//例です。好きな処理や名前に変えてください。
+  void showCharacterListUI() {
     setState(() {
-      uiNoZyoutai1 = 1;
+      isCharacterListUIVisible = true;
+    });
+  }
+
+  @override
+  void hideCharacterListUI() {
+    setState(() {
+      isCharacterListUIVisible = false;
+    });
+  }
+
+  @override
+  void chooseCharacter(Character character) {
+    setState(() {
+      chosenCharacter = character;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return CharacterPageUI(
-        uiState: CharacterPageUIState(uiNoZyoutai1: uiNoZyoutai1, uiNoZyoutai2: uiNoZyoutai2),
+        uiState: CharacterPageUIState(
+            chosenCharacter: chosenCharacter,
+            isCharacterListUIVisible: isCharacterListUIVisible
+        ),
         callback: this
     );
   }
@@ -37,5 +56,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
 
 abstract class CharacterPageCallback {
   void moveToHomePage(BuildContext context);
-  void uiNoZyotaiWoHenkouSuruKansu();
+  void showCharacterListUI();
+  void hideCharacterListUI();
+  void chooseCharacter(Character character);
 }
