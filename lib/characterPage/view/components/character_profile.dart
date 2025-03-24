@@ -5,8 +5,9 @@ import 'character_profile_ui.dart';
 
 class CharacterProfile extends StatefulWidget {
   final Character character;
+  final int characterLevel;
   final void Function() onClick;
-  const CharacterProfile({super.key, required this.character, required this.onClick});
+  const CharacterProfile({super.key, required this.character, required this.characterLevel, required this.onClick});
 
   @override
   State<CharacterProfile> createState() => _CharacterProfile();
@@ -21,7 +22,10 @@ class _CharacterProfile extends State<CharacterProfile> implements CharacterProf
   @override
   Widget build(BuildContext context) {
     return CharacterProfileUI(
-        uiState: CharacterProfileUIState(character: widget.character),
+        uiState: CharacterProfileUIState(
+            character: widget.character,
+            characterLevel: widget.characterLevel
+        ),
         callback: this
     );
   }

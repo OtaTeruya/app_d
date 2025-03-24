@@ -2,7 +2,7 @@ class Character {
   final int id;
   final String name;
   final String imagePath;
-  final int level;
+  late final int level;
   final int maxLevel;
   final double size;
   final double minDist;

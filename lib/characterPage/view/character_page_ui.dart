@@ -60,6 +60,7 @@ class CharacterPageUI extends StatelessWidget {
                           padding: const EdgeInsets.all(20),
                           child: CharacterProfile(
                             character: uiState.chosenCharacter,
+                            characterLevel: uiState.chosenCharacterLevel,
                             onClick: () => callback.showCharacterListUI(),
                           ),
                         )
@@ -82,11 +83,13 @@ class CharacterPageUI extends StatelessWidget {
 
 class CharacterPageUIState {
   final Character chosenCharacter;
+  final int chosenCharacterLevel;
   final int foodCount;
   final bool isCharacterListUIVisible;
 
   CharacterPageUIState({
     required this.chosenCharacter,
+    required this.chosenCharacterLevel,
     required this.foodCount,
     required this.isCharacterListUIVisible
   });

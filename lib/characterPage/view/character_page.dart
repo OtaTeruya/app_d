@@ -15,6 +15,7 @@ class CharacterPage extends StatefulWidget {
 
 class _CharacterPage extends State<CharacterPage> implements CharacterPageCallback {
   Character? chosenCharacter;
+  int? chosenCharacterLevel;
   int? foodCount;
   bool isCharacterListUIVisible = false;
 
@@ -29,6 +30,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     final character = await CharacterManager().loadChosenCharacter();
     setState(() {
       chosenCharacter = character;
+      chosenCharacterLevel = character.level;
     });
   }
 
@@ -46,7 +48,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
 
   @override
   bool feedingFood() {
-    if (foodCount == null) {
+    if (foodCount == null || chosenCharacter == null || chosenCharacterLevel == null) {
       return false;
     }
     if (foodCount! <= 0) {
@@ -54,8 +56,10 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     }
 
     FoodManager().subtractSavedFoodCount();
+    CharacterManager().addSavedCharacterLevel(chosenCharacter!.id);
     setState(() {
       foodCount = foodCount! - 1;
+      chosenCharacterLevel = chosenCharacterLevel! + 1;
     });
     return true;
   }
@@ -79,6 +83,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     CharacterManager().saveChosenCharacter(character);
     setState(() {
       chosenCharacter = character;
+      chosenCharacterLevel = character.level;
     });
   }
 
@@ -91,6 +96,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     return CharacterPageUI(
         uiState: CharacterPageUIState(
             chosenCharacter: chosenCharacter!,
+            chosenCharacterLevel: chosenCharacterLevel!,
             foodCount: foodCount!,
             isCharacterListUIVisible: isCharacterListUIVisible
         ),
