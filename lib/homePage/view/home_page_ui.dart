@@ -1,5 +1,6 @@
 import 'package:app_d/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'home_page.dart';
 
@@ -31,6 +32,10 @@ class HomePageUI extends StatelessWidget {
                   TextButton(
                       onPressed: () => callback.moveToCharacterPage(context),
                       child: Text('CharacterPageへ')
+                  ),
+                  TextButton(
+                      onPressed: () => context.go('/capturePage/captureResult?imgPath="hoge'),
+                      child: Text('撮影結果へ')
                   )
                 ]
             )

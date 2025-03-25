@@ -1,3 +1,4 @@
+import 'package:app_d/capturePage/view/meal_form.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,12 +23,22 @@ final goRouter = GoRouter(
         GoRoute(
           path: 'captureResult',
           name: 'captureResult',
-          builder:
-              (context, state) {
+          routes: [
+            GoRoute(
+              path: 'mealForm',
+              name: 'mealForm',
+              builder: (context, state) {
                 final map = state.uri.queryParameters;
                 String imgPath = map['imgPath']!;
-                return CaptureResult(imgPath: imgPath);
+                return MealForm(imgPath: imgPath);
               },
+            ),
+          ],
+          builder: (context, state) {
+            final map = state.uri.queryParameters;
+            String imgPath = map['imgPath']!;
+            return CaptureResult(imgPath: imgPath);
+          },
         ),
       ],
       builder: (context, state) => const CapturePage(),

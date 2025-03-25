@@ -5,13 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
-class CaptureResult extends StatelessWidget {
+class CaptureResult extends StatefulWidget {
   const CaptureResult({super.key, required this.imgPath});
   final String imgPath;
 
   @override
+  State<CaptureResult> createState() => _CaptureResultState();
+}
+
+class _CaptureResultState extends State<CaptureResult> {
+
+  @override
   Widget build(BuildContext context) {
-    print(imgPath);
+    print(widget.imgPath);
     return Scaffold(
       appBar: CustomAppBar(title: 'CapturePage'),
       body: Center(
@@ -21,38 +27,52 @@ class CaptureResult extends StatelessWidget {
             SizedBox(
               height: 320,
               child: FutureBuilder<bool>(
-                future: File(imgPath).exists(),
+                future: File(widget.imgPath).exists(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
-                    return const Text("エラーが発生しました");
+                    return Center(child: const Text("エラーが発生しました"));
                   } else if (snapshot.data == true) {
-                    return Image.file(File(imgPath));
+                    return Image.file(File(widget.imgPath));
                   } else {
-                    return const Text("データが存在しません");
+                    return Center(child: const Text("データが存在しません"));
                   }
                 },
               ),
             ),
             Gap(20),
-            TextButton(
-              onPressed: () {
-                File(imgPath).delete();
-                print("ファイル削除：$imgPath");
-                context.replace('/capturePage');
-              },
-              child: Text('撮り直す'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      File(widget.imgPath).delete();
+                      print("ファイル削除：${widget.imgPath}");
+                      context.replace('/capturePage');
+                    },
+                    style: TextButton.styleFrom(
+                      side: BorderSide(color: Colors.blue),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    child: Text('撮り直す',style: TextStyle(color: Colors.blueGrey),),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.go('/capturePage/captureResult/mealForm?imgPath=${widget.imgPath}');
+                    },
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                    ),
+                    child: Text('これにする！', style: TextStyle(color: Colors.white)),
+                  ),
+                ],
+              ),
             ),
-            TextButton(onPressed: () {}, child: Text('保存する')),
-            TextButton(
-              onPressed: () => context.go('/homePage'),
-              child: Text('HomePageへ'),
-            ),
-            TextButton(
-              onPressed: () => context.go('/historyPage'),
-              child: Text('HistoryPageへ'),
-            ),
+            
           ],
         ),
       ),
