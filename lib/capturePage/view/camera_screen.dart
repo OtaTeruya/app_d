@@ -1,4 +1,4 @@
-import 'package:app_d/custom_app_bar.dart';
+//import 'package:app_d/custom_app_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -46,7 +46,15 @@ class CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     // プレビュー画面を表示
     return Scaffold(
-      appBar: CustomAppBar(title: 'CapturePage'),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text('CapturePage'),
+        leading: BackButton(
+          onPressed: () {
+            context.go('/homePage');
+          },
+        ),
+      ),
       body: Center(
         child: FutureBuilder<void>(
           future: _initializeControllerFuture,
@@ -77,7 +85,9 @@ class CameraScreenState extends State<CameraScreen> {
               final image = await _controller.takePicture();
               // path を出力
               print(image.path);
-              context.replace('/capturePage/captureResult?imgPath=${image.path}');
+              context.replace(
+                '/capturePage/captureResult?imgPath=${image.path}',
+              );
             },
             backgroundColor: Colors.white,
             shape: CircleBorder(),
