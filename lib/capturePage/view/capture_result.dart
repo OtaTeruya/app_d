@@ -39,6 +39,8 @@ class _CaptureResultState extends State<CaptureResult> {
           child: Column(
             children: [
               Gap(10),
+              Text("画像を確認して下さい"),
+              Divider(),
               SizedBox(
                 height: 320,
                 child:
@@ -48,10 +50,13 @@ class _CaptureResultState extends State<CaptureResult> {
                         ) // ローディング中
                         : fileExists == true
                         ? Image.file(File(widget.imgPath)) // ファイルが存在する場合
-                        : const Center(child: Text("データが存在しません")), // ファイルが存在しない場合
+                        : const Center(
+                          child: Text("データが存在しません"),
+                        ), // ファイルが存在しない場合
               ),
               Gap(20),
-              fileExists != null  //後で修正
+              fileExists !=
+                      null //後で修正
                   ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Row(
@@ -94,6 +99,7 @@ class _CaptureResultState extends State<CaptureResult> {
                     onPressed: () => context.go('/homePage'),
                     child: Text('HomePageへ'),
                   ),
+              Gap(10),
             ],
           ),
         ),
