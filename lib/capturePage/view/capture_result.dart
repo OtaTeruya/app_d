@@ -20,18 +20,31 @@ class CaptureResult extends StatelessWidget {
             Gap(10),
             SizedBox(
               height: 320,
-              child: Expanded(child: Image.file(File(imgPath))),
+              child: FutureBuilder<bool>(
+                future: File(imgPath).exists(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return const Text("エラーが発生しました");
+                  } else if (snapshot.data == true) {
+                    return Image.file(File(imgPath));
+                  } else {
+                    return const Text("データが存在しません");
+                  }
+                },
+              ),
             ),
             Gap(20),
             TextButton(
               onPressed: () {
-                print(File(imgPath).exists());
                 File(imgPath).delete();
-                context.go('/capturePage/captureResult?imgPath=$imgPath');
-                //context.replace('/capturePage');
+                print("ファイル削除：$imgPath");
+                context.replace('/capturePage');
               },
               child: Text('撮り直す'),
             ),
+            TextButton(onPressed: () {}, child: Text('保存する')),
             TextButton(
               onPressed: () => context.go('/homePage'),
               child: Text('HomePageへ'),

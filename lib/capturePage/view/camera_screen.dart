@@ -37,7 +37,7 @@ class CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     // ウィジェットが破棄されたら、コントローラーを破棄
-    print("破棄");
+    print("カメラ破棄");
     _controller.dispose();
     super.dispose();
   }
@@ -52,13 +52,13 @@ class CameraScreenState extends State<CameraScreen> {
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              print("起動完了");
+              print("カメラ起動完了");
               return CameraPreview(_controller);
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Center(child: Text('エラーが発生しました\n${snapshot.error}'));
             } else {
-              print("起動中");
+              print("カメラ起動中");
               return const Center(child: CircularProgressIndicator());
             }
           },
