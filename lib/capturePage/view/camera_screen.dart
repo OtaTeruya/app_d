@@ -77,7 +77,7 @@ class CameraScreenState extends State<CameraScreen> {
               final image = await _controller.takePicture();
               // path を出力
               print(image.path);
-              context.go('/capturePage/captureResult?imgPath=${image.path}');
+              context.replace('/capturePage/captureResult?imgPath=${image.path}');
             },
             backgroundColor: Colors.white,
             shape: CircleBorder(),

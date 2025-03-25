@@ -24,6 +24,15 @@ class CaptureResult extends StatelessWidget {
             ),
             Gap(20),
             TextButton(
+              onPressed: () {
+                print(File(imgPath).exists());
+                File(imgPath).delete();
+                context.go('/capturePage/captureResult?imgPath=$imgPath');
+                //context.replace('/capturePage');
+              },
+              child: Text('撮り直す'),
+            ),
+            TextButton(
               onPressed: () => context.go('/homePage'),
               child: Text('HomePageへ'),
             ),
