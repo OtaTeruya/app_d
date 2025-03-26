@@ -3,6 +3,7 @@ import 'package:app_d/characterPage/view/components/cage_with_character.dart';
 import 'package:app_d/characterPage/view/components/character_list.dart';
 import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../custom_app_bar.dart';
 import 'character_page.dart';
@@ -24,11 +25,11 @@ class CharacterPageUI extends StatelessWidget {
         body:Center(
             child: Stack(
                 children: [
-                  Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                        children: [
+                          Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               TextButton(
@@ -50,21 +51,27 @@ class CharacterPageUI extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
-                        CageWithCharacter(
-                          cageSize: MediaQuery.of(context).size.width-40,
-                          character: uiState.chosenCharacter,
-                          callback: callback
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(20),
-                          child: CharacterProfile(
+                          Expanded(
+                              child: LayoutBuilder(
+                                  builder: (context, constraints) {
+                                    return CageWithCharacter(
+                                        character: uiState.chosenCharacter,
+                                        cageHeight: constraints.maxHeight,
+                                        cageWidth: constraints.maxWidth,
+                                        callback: callback
+                                    );
+                                  }
+                              )
+                          ),
+                          Gap(20),
+                          CharacterProfile(
                             character: uiState.chosenCharacter,
                             characterLevel: uiState.chosenCharacterLevel,
                             onClick: () => callback.showCharacterListUI(),
                           ),
-                        )
-                      ]
+                          Gap(40),
+                        ]
+                    ),
                   ),
 
                   Visibility(
