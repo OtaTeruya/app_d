@@ -21,8 +21,8 @@ class CageWithCharacterUI extends StatelessWidget {
           callback.cageTapped(details.localPosition);
         },
         child: Container(
-          width: uiState.cageSize,
-          height: uiState.cageSize,
+          width: uiState.cageWidth,
+          height: uiState.cageHeight,
           color: Colors.blue[50],
           child: Stack(
             children: [
@@ -33,8 +33,8 @@ class CageWithCharacterUI extends StatelessWidget {
                     left: uiState.foodLeftPosition,
                     child: Image.asset(
                       "images/hamburger.png",
-                      width: 32,
-                      height: 32,
+                      width: uiState.foodSize,
+                      height: uiState.foodSize,
                     ),
                   )
               ),
@@ -71,9 +71,11 @@ class CageWithCharacterUI extends StatelessWidget {
 class CageWithCharacterUIState {
   final double topPosition;
   final double leftPosition;
-  final double cageSize;
+  final double cageHeight;
+  final double cageWidth;
   final Character character;
   final bool isFeeding;
+  final double foodSize;
   final double foodTopPosition;
   final double foodLeftPosition;
   final AnimationController rotationController;
@@ -81,9 +83,11 @@ class CageWithCharacterUIState {
   CageWithCharacterUIState({
     required this.topPosition,
     required this.leftPosition,
-    required this.cageSize,
+    required this.cageHeight,
+    required this.cageWidth,
     required this.character,
     required this.isFeeding,
+    required this.foodSize,
     required this.foodTopPosition,
     required this.foodLeftPosition,
     required this.rotationController
