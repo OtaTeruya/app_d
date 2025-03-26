@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:app_d/custom_app_bar.dart';
-import 'package:app_d/data.dart';
+import 'package:app_d/database/record_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -17,11 +17,15 @@ class MealForm extends StatefulWidget {
 class _MealFormState extends State<MealForm> {
   bool? fileExists; // ファイルの存在状態を保持する変数
   DateTime now = DateTime.now();
+  final RecordDAO recordDAO = RecordDAO();
+  String latestRecordText = "最新のデータ: なし";
+  String recordsText = "特定の日付のデータ: なし";
 
   @override
   void initState() {
     super.initState();
     _checkFileExists(); // ファイルの存在を確認
+    //handleDatabaseOperations(); // データベース操作を初期化時に呼び出す
   }
 
   Future<void> _checkFileExists() async {
@@ -38,9 +42,17 @@ class _MealFormState extends State<MealForm> {
     return now.hour * 10000 + now.minute * 100 + now.second;
   }
 
-  void addData() {
+  void addDataToDB() async{
+    if(fileExists == null || fileExists == false){
+      return;
+    }
     // データを保存する処理
-    
+    await recordDAO.insertRecord(widget.imgPath, getDateInt(), getTimeInt());
+  
+    // 最新のデータを取得
+    var latestRecord = await recordDAO.getLatestRecord();
+    latestRecordText = '最新のデータ: $latestRecord';
+    print(latestRecordText);
   }
 
   @override
@@ -76,14 +88,14 @@ class _MealFormState extends State<MealForm> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      addData();
+                      addDataToDB();
                       context.go('/homePage');
                     },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
                     onPressed: () {
-                      addData();
+                      addDataToDB();
                       context.go('/historyPage');
                     },
                     child: Text('HistoryPageへ'),
@@ -96,4 +108,33 @@ class _MealFormState extends State<MealForm> {
       ),
     );
   }
+
+//    Future<void> handleDatabaseOperations() async {
+//     DateTime now = DateTime.now();
+//     int date = int.parse(
+//       '${now.year}${now.month.toString().padLeft(2, '0')}${now.day.toString().padLeft(2, '0')}',
+//     ); // YYYYMMDD形式
+//     int time = int.parse(
+//       '${now.hour.toString().padLeft(2, '0')}${now.minute.toString().padLeft(2, '0')}',
+//     ); // HHMM形式
+//     print(widget.imgPath);
+//     String imgPath = widget.imgPath;
+//     print('日付: $date');
+//     print('時刻: $time');
+//     // データを追加
+//     await recordDAO.insertRecord(imgPath, date, time);
+
+//     // 最新のデータを取得
+//     var latestRecord = await recordDAO.getLatestRecord();
+
+//     // 特定の日付のデータを取得
+//     var records = await recordDAO.getRecordsByDate(20250330);
+
+//     latestRecordText = '最新のデータ: $latestRecord';
+//     recordsText = '2025年3月31日のデータ: $records';
+
+//     print(latestRecordText);
+//     print(recordsText);
+//   }
+
 }
