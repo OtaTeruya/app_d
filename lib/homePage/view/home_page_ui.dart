@@ -1,5 +1,6 @@
 import 'package:app_d/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'home_page.dart';
 
@@ -32,6 +33,12 @@ class HomePageUIState extends State<HomePageUI> {
             TextButton(
               onPressed: () => widget.callback.moveToCharacterPage(context),
               child: Text('CharacterPageへ'),
+            ),
+            TextButton(
+              //今だけ
+              onPressed:
+                  () => context.go('/capturePage/captureResult?imgPath="hoge'),
+              child: Text('撮影結果へ'),
             ),
           ],
         ),

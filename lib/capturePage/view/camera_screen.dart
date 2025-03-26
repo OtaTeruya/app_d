@@ -1,4 +1,4 @@
-import 'package:app_d/custom_app_bar.dart';
+//import 'package:app_d/custom_app_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +37,7 @@ class CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     // ウィジェットが破棄されたら、コントローラーを破棄
-    print("破棄");
+    print("カメラ破棄");
     _controller.dispose();
     super.dispose();
   }
@@ -46,19 +46,27 @@ class CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     // プレビュー画面を表示
     return Scaffold(
-      appBar: CustomAppBar(title: 'CapturePage'),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text('CapturePage'),
+        leading: BackButton(
+          onPressed: () {
+            context.go('/homePage');
+          },
+        ),
+      ),
       body: Center(
         child: FutureBuilder<void>(
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              print("起動完了");
+              print("カメラ起動完了");
               return CameraPreview(_controller);
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Center(child: Text('エラーが発生しました\n${snapshot.error}'));
             } else {
-              print("起動中");
+              print("カメラ起動中");
               return const Center(child: CircularProgressIndicator());
             }
           },
@@ -77,7 +85,9 @@ class CameraScreenState extends State<CameraScreen> {
               final image = await _controller.takePicture();
               // path を出力
               print(image.path);
-              context.go('/capturePage/captureResult?imgPath=${image.path}');
+              context.replace(
+                '/capturePage/captureResult?imgPath=${image.path}',
+              );
             },
             backgroundColor: Colors.white,
             shape: CircleBorder(),
