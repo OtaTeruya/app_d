@@ -56,8 +56,8 @@ class _CaptureResultState extends State<CaptureResult> {
                         ), // ファイルが存在しない場合
               ),
               Gap(20),
-              fileExists !=
-                      null //後で修正
+              fileExists ==
+                      true
                   ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Row(

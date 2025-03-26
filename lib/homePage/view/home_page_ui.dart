@@ -34,12 +34,6 @@ class HomePageUIState extends State<HomePageUI> {
               onPressed: () => widget.callback.moveToCharacterPage(context),
               child: Text('CharacterPageへ'),
             ),
-            TextButton(
-              //今だけ
-              onPressed:
-                  () => context.go('/capturePage/captureResult?imgPath="hoge'),
-              child: Text('撮影結果へ'),
-            ),
           ],
         ),
       ),
