@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_d/custom_app_bar.dart';
+import 'package:app_d/data.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +29,18 @@ class _MealFormState extends State<MealForm> {
     setState(() {
       fileExists = exists; // 結果を State に保存
     });
+  }
+
+  int getDateInt(){
+    return now.year * 10000 + now.month * 100 + now.day;
+  }
+  int getTimeInt(){
+    return now.hour * 10000 + now.minute * 100 + now.second;
+  }
+
+  void addData() {
+    // データを保存する処理
+    
   }
 
   @override
@@ -62,11 +75,17 @@ class _MealFormState extends State<MealForm> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
-                    onPressed: () => context.go('/homePage'),
+                    onPressed: () {
+                      addData();
+                      context.go('/homePage');
+                    },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
-                    onPressed: () => context.go('/historyPage'),
+                    onPressed: () {
+                      addData();
+                      context.go('/historyPage');
+                    },
                     child: Text('HistoryPageへ'),
                   ),
                 ],

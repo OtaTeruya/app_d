@@ -33,7 +33,7 @@ class HomePageUI extends StatelessWidget {
                       onPressed: () => callback.moveToCharacterPage(context),
                       child: Text('CharacterPageへ')
                   ),
-                  TextButton(
+                  TextButton( //今だけ
                       onPressed: () => context.go('/capturePage/captureResult?imgPath="hoge'),
                       child: Text('撮影結果へ')
                   )
