@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app_d/custom_app_bar.dart';
-import 'package:app_d/database/record_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
