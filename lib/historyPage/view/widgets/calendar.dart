@@ -3,29 +3,34 @@ import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatelessWidget {
   final ValueNotifier<DateTime> selectedDate;
+  
 
-  const Calendar({super.key, required this.selectedDate});
+  const Calendar({
+    super.key,
+    required this.selectedDate,
+    
+  });
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TableCalendar(
+    return ValueListenableBuilder<DateTime>(
+      valueListenable: selectedDate,
+      builder: (context, date, child) {
+        return TableCalendar(
           firstDay: DateTime.utc(2024, 1, 1),
           lastDay: DateTime.utc(2050, 1, 1),
-          focusedDay: selectedDate.value,
+          focusedDay: date,
           locale: 'ja_JP',
-          selectedDayPredicate: (day) => isSameDay(selectedDate.value, day),
+          selectedDayPredicate: (day) => isSameDay(date, day),
           onDaySelected: (selectedDay, focusedDay) {
-            selectedDate.value = selectedDay;
+            if (!isSameDay(selectedDate.value, selectedDay)) {
+              selectedDate.value = selectedDay; // 値が変わるときのみ更新
+            }
           },
-          calendarStyle: CalendarStyle(
-            selectedDecoration: BoxDecoration(
-              color: Colors.blue, // 選択された日付の背景色
-              shape: BoxShape.circle, // 丸い形にする
-            ),
-          ),
-        ),
-      ],
+
+          
+        );
+      },
     );
   }
 }
