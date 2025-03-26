@@ -133,25 +133,21 @@ class _CageWithCharacter
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-        builder: (context, constraints) {
-          return CageWithCharacterUI(
-              uiState: CageWithCharacterUIState(
-                  topPosition: topPosition,
-                  leftPosition: leftPosition,
-                  cageHeight: widget.cageHeight,
-                  cageWidth: widget.cageWidth,
-                  character: widget.character,
-                  isFeeding: isFeeding,
-                  foodSize: foodSize,
-                  foodTopPosition: foodTopPosition,
-                  foodLeftPosition: foodLeftPosition,
-                  rotationController: _rotationController
-              ),
-              callback: this
-          );
-        }
-  );
+    return CageWithCharacterUI(
+        uiState: CageWithCharacterUIState(
+            topPosition: topPosition,
+            leftPosition: leftPosition,
+            cageHeight: widget.cageHeight,
+            cageWidth: widget.cageWidth,
+            character: widget.character,
+            isFeeding: isFeeding,
+            foodSize: foodSize,
+            foodTopPosition: foodTopPosition,
+            foodLeftPosition: foodLeftPosition,
+            rotationController: _rotationController
+        ),
+        callback: this
+    );
   }
 }
 
