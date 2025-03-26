@@ -29,6 +29,7 @@ class _CageWithCharacter
   late AnimationController _rotationController;
 
   bool isFeeding = false;
+  final double foodSize = 32;
   double foodTopPosition = 0.0;
   double foodLeftPosition = 0.0;
 
@@ -98,21 +99,21 @@ class _CageWithCharacter
     }
 
     // タップ位置に基づいて位置を更新
-    double newT = tappedPosition.dy - (widget.character.size / 2);
-    newT = newT.clamp(0, widget.cageHeight - widget.character.size);
-    double newL = tappedPosition.dx - (widget.character.size / 2);
-    newL = newL.clamp(0, widget.cageWidth - widget.character.size);
     setState(() {
-      topPosition = newT;
-      leftPosition = newL;
+      double newT = tappedPosition.dy - (widget.character.size / 2);
+      topPosition = newT.clamp(0, widget.cageHeight - widget.character.size);
+      double newL = tappedPosition.dx - (widget.character.size / 2);
+      leftPosition = newL.clamp(0, widget.cageWidth - widget.character.size);
     });
 
     bool isFeedingSucceeded = widget.callback.feedingFood();
     if (isFeedingSucceeded) {//餌やりが行われた場合
       setState(() {
         isFeeding = true;
-        foodTopPosition = newT;
-        foodLeftPosition = newL;
+        double newT = tappedPosition.dy - (foodSize / 2);
+        foodTopPosition = newT.clamp(0, widget.cageHeight - foodSize);
+        double newL = tappedPosition.dx - (foodSize / 2);
+        foodLeftPosition = newL.clamp(0, widget.cageWidth - foodSize);
       });
     }
   }
@@ -142,6 +143,7 @@ class _CageWithCharacter
                   cageWidth: widget.cageWidth,
                   character: widget.character,
                   isFeeding: isFeeding,
+                  foodSize: foodSize,
                   foodTopPosition: foodTopPosition,
                   foodLeftPosition: foodLeftPosition,
                   rotationController: _rotationController

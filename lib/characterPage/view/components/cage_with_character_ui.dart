@@ -33,8 +33,8 @@ class CageWithCharacterUI extends StatelessWidget {
                     left: uiState.foodLeftPosition,
                     child: Image.asset(
                       "images/hamburger.png",
-                      width: 32,
-                      height: 32,
+                      width: uiState.foodSize,
+                      height: uiState.foodSize,
                     ),
                   )
               ),
@@ -75,6 +75,7 @@ class CageWithCharacterUIState {
   final double cageWidth;
   final Character character;
   final bool isFeeding;
+  final double foodSize;
   final double foodTopPosition;
   final double foodLeftPosition;
   final AnimationController rotationController;
@@ -86,6 +87,7 @@ class CageWithCharacterUIState {
     required this.cageWidth,
     required this.character,
     required this.isFeeding,
+    required this.foodSize,
     required this.foodTopPosition,
     required this.foodLeftPosition,
     required this.rotationController
