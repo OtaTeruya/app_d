@@ -1,4 +1,3 @@
-import 'package:app_d/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'home_page.dart';
@@ -17,25 +16,99 @@ class HomePageUIState extends State<HomePageUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'HomePage'),
+      backgroundColor: Color(0xFF669966),
       body: Center(
         child: Column(
           children: [
-            TextButton(
-              onPressed: () => widget.callback.moveToCapturePage(context),
-              child: Text('CapturePageへ'),
+            SizedBox(height: 160),
+            Text(
+              "もぐもぐ帳",
+              style: TextStyle(
+                fontSize: 48,
+                fontWeight: FontWeight.w900,
+                color: Colors.white,
+              ),
             ),
-            TextButton(
-              onPressed: () => widget.callback.moveToHistoryPage(context),
-              child: Text('HistoryPageへ'),
+            SizedBox(height: 32),
+            Expanded(child: Container(child: _charactersBox())),
+            _menuButton(
+              () => widget.callback.moveToCapturePage(context),
+              '食事の写真を撮る',
             ),
-            TextButton(
-              onPressed: () => widget.callback.moveToCharacterPage(context),
-              child: Text('CharacterPageへ'),
+            SizedBox(height: 28),
+            _menuButton(
+              () => widget.callback.moveToHistoryPage(context),
+              '履歴を見る',
             ),
+            SizedBox(height: 28),
+            _menuButton(
+              () => widget.callback.moveToCharacterPage(context),
+              'モンスターに会いに行く',
+            ),
+            SizedBox(height: 80),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _menuButton(VoidCallback onPressed, String text) {
+    return SizedBox(
+      width: 280,
+      height: 48,
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Color(0xFF669966),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+        child: Text(text, style: TextStyle(fontSize: 18)),
+      ),
+    );
+  }
+
+  Widget _charactersBox() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset("images/character2.png"),
+            ),
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset("images/character4.png"),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset("images/character1.png"),
+            ),
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset("images/character3.png"),
+            ),
+            SizedBox(
+              height: 100,
+              width: 100,
+              child: Image.asset("images/character5.png"),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
