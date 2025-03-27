@@ -1,6 +1,5 @@
 import 'package:app_d/database/record_dao.dart';
 import 'package:app_d/historyPage/view/widgets/calendar.dart';
-import 'package:app_d/historyPage/view/widgets/meal_image.dart';
 import 'package:app_d/historyPage/view/widgets/photo_list.dart';
 import 'package:flutter/material.dart';
 
@@ -65,8 +64,6 @@ class HistoryPageUI extends StatelessWidget {
                 },
               ),
             ),
-
-            MealImage(),
           ],
         ),
       ),
