@@ -100,6 +100,7 @@ class _MealFormState extends State<MealForm> {
     FoodManager().addSavedFoodCount();
     showDialog<void>(
       context: context,
+      barrierDismissible: false,
       builder: (_) {
         return RewardDialog(nextPath: nextPath,);
       },
