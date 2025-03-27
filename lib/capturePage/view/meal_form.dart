@@ -9,8 +9,9 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class MealForm extends StatefulWidget {
-  const MealForm({super.key, required this.imgPath});
+  const MealForm({super.key, required this.imgPath, required this.foodName});
   final String imgPath;
+  final String foodName;
 
   @override
   State<MealForm> createState() => _MealFormState();
@@ -79,7 +80,7 @@ class _MealFormState extends State<MealForm> {
     // 最新のデータを取得
     var latestRecord = await recordDAO.getLatestRecord();
     latestRecordText = '最新のデータ: $latestRecord';
-    print(latestRecordText);
+    print(latestRecordText);  //登録データの確認
 
     rewardHndling(nextPath);
   }
@@ -102,7 +103,7 @@ class _MealFormState extends State<MealForm> {
       context: context,
       barrierDismissible: false,
       builder: (_) {
-        return RewardDialog(nextPath: nextPath,);
+        return RewardDialog(nextPath: nextPath);
       },
     );
   }
@@ -120,6 +121,13 @@ class _MealFormState extends State<MealForm> {
                 child: Text(
                   "${now.year.toString()}年${now.month.toString()}月${now.day.toString()}日",
                   style: const TextStyle(fontSize: 20),
+                ),
+              ),
+              Divider(),
+              Center(
+                child: Text(
+                  "命名: ${widget.foodName}",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                 ),
               ),
               Divider(),
@@ -142,13 +150,13 @@ class _MealFormState extends State<MealForm> {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      addDataToDB(context,'/homePage');
+                      addDataToDB(context, '/homePage');
                     },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
                     onPressed: () {
-                      addDataToDB(context,'/historyPage');
+                      addDataToDB(context, '/historyPage');
                     },
                     child: Text('HistoryPageへ'),
                   ),

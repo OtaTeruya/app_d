@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_d/capturePage/component/judge_food.dart';
 import 'package:app_d/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -15,18 +16,32 @@ class CaptureResult extends StatefulWidget {
 
 class _CaptureResultState extends State<CaptureResult> {
   bool? fileExists; // ファイルの存在状態を保持する変数
+  bool? isFood; // 食べ物かどうか
+  String foodName = ''; // 料理名
 
   @override
   void initState() {
     super.initState();
     _checkFileExists(); // ファイルの存在を確認
-    
+    askGemini();
   }
 
   Future<void> _checkFileExists() async {
     final exists = await File(widget.imgPath).exists();
     setState(() {
       fileExists = exists; // 結果を State に保存
+    });
+  }
+
+  void askGemini() async {
+    String result = await JudgeFood().judge(
+      widget.imgPath,
+    ); // result = '食べ物か,信頼度,料理名';
+    print('Gemini結果：$result');
+    List<String> resultList = result.split(',');
+    setState(() {
+      isFood = resultList[0] == 'Yes' ? true : false;
+      foodName = resultList[2];
     });
   }
 
@@ -40,7 +55,11 @@ class _CaptureResultState extends State<CaptureResult> {
           child: Column(
             children: [
               Gap(10),
-              Text("画像を確認して下さい"),
+              isFood == null
+                  ? CircularProgressIndicator()
+                  : isFood == true
+                  ? Text("画像を確認して下さい")
+                  : Text("食べ物を撮影して下さい"),
               Divider(),
               SizedBox(
                 height: 320,
@@ -56,8 +75,7 @@ class _CaptureResultState extends State<CaptureResult> {
                         ), // ファイルが存在しない場合
               ),
               Gap(20),
-              fileExists ==
-                      true
+              fileExists == true
                   ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: Row(
@@ -78,21 +96,23 @@ class _CaptureResultState extends State<CaptureResult> {
                             style: TextStyle(color: Colors.blueGrey),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            context.go(
-                              '/capturePage/captureResult/mealForm?imgPath=${widget.imgPath}',
-                            );
-                          },
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                          ),
-                          child: Text(
-                            'これにする！',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
+                        isFood == true
+                            ? TextButton(
+                              onPressed: () {
+                                context.go(
+                                  '/capturePage/captureResult/mealForm?imgPath=${widget.imgPath}&foodName=$foodName',
+                                );
+                              },
+                              style: TextButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                              ),
+                              child: Text(
+                                'これにする！',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                            : SizedBox(),
                       ],
                     ),
                   )
