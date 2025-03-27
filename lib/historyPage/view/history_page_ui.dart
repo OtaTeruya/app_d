@@ -17,9 +17,21 @@ class HistoryPageUI extends StatelessWidget {
     var records = await RecordDAO().getRecordsByDate(date);
     List<String> photoPaths = [];
     for (var record in records) {
-      photoPaths.add(record['path']); // date を文字列として追加
+      photoPaths.add(record['path']);
     }
     return photoPaths;
+  }
+
+  Future<List<String>> pickPhotoTimes(int date) async {
+    var records = await RecordDAO().getRecordsByDate(date);
+    List<String> photoTimes = [];
+    for (var record in records) {
+      int time = record['time'];
+      int hour = time ~/ 10000;
+      int minute = time ~/ 100 - hour * 100;
+      photoTimes.add('$hour:${minute.toString().padLeft(2, '0')}');
+    }
+    return photoTimes;
   }
 
   int convertDateTimeToInt(DateTime dateTime) {
@@ -46,15 +58,23 @@ class HistoryPageUI extends StatelessWidget {
               child: ValueListenableBuilder<DateTime>(
                 valueListenable: _selectedDate,
                 builder: (context, date, child) {
-                  return FutureBuilder(
-                    future: pickPhotoPaths(convertDateTimeToInt(date)),
+                  return FutureBuilder<List<dynamic>>(
+                    future: Future.wait([
+                      pickPhotoPaths(convertDateTimeToInt(date)), // 写真のパス取得
+                      pickPhotoTimes(convertDateTimeToInt(date)), // 撮影時間取得
+                    ]),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
+                        List<String> photoPaths = snapshot.data?[0] ?? [];
+                        List<String> photoTimes = snapshot.data?[1] ?? [];
                         return Column(
                           children: [
                             Text('${date.year}年${date.month}月${date.day}日'),
                             SizedBox(height: 8),
-                            PhotoList(photoPaths: snapshot.data ?? []),
+                            PhotoList(
+                              photoPaths: photoPaths,
+                              photoTimes: photoTimes,
+                            ),
                           ],
                         );
                       }
