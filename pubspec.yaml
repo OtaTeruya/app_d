@@ -44,6 +44,7 @@ dependencies:
   path: ^1.9.1
   gap: ^3.0.1
   sqflite: ^2.4.2
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -106,3 +107,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "images/character1.png"
+  adaptive_icon_background: "#d0e2be"
+  adaptive_icon_foreground: "images/character1.png"
+  remove_alpha_ios: true
