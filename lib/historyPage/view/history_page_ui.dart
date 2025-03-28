@@ -58,7 +58,7 @@ class HistoryPageUI extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(title: 'HistoryPage'),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 1),
         child: ListView(
           children: [
             Align(
@@ -69,37 +69,40 @@ class HistoryPageUI extends StatelessWidget {
               ),
             ),
             Calendar(selectedDate: _selectedDate),
-            Center(
-              child: ValueListenableBuilder<DateTime>(
-                valueListenable: _selectedDate,
-                builder: (context, date, child) {
-                  return FutureBuilder<List<dynamic>>(
-                    future: Future.wait([
-                      pickPhotoPaths(convertDateTimeToInt(date)), // 写真のパス取得
-                      pickPhotoTimes(convertDateTimeToInt(date)),
-                      pickPhotoTitles(convertDateTimeToInt(date)),
-                    ]),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<String> photoPaths = snapshot.data?[0] ?? [];
-                        List<String> photoTimes = snapshot.data?[1] ?? [];
-                        List<String> photoTitles = snapshot.data?[2] ?? [];
-                        return Column(
-                          children: [
-                            Text('${date.year}年${date.month}月${date.day}日'),
-                            SizedBox(height: 8),
-                            PhotoList(
-                              photoPaths: photoPaths,
-                              photoTimes: photoTimes,
-                              photoTitles: photoTitles,
-                            ),
-                          ],
-                        );
-                      }
-                      return SizedBox.shrink();
-                    },
-                  );
-                },
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Center(
+                child: ValueListenableBuilder<DateTime>(
+                  valueListenable: _selectedDate,
+                  builder: (context, date, child) {
+                    return FutureBuilder<List<dynamic>>(
+                      future: Future.wait([
+                        pickPhotoPaths(convertDateTimeToInt(date)), // 写真のパス取得
+                        pickPhotoTimes(convertDateTimeToInt(date)),
+                        pickPhotoTitles(convertDateTimeToInt(date)),
+                      ]),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          List<String> photoPaths = snapshot.data?[0] ?? [];
+                          List<String> photoTimes = snapshot.data?[1] ?? [];
+                          List<String> photoTitles = snapshot.data?[2] ?? [];
+                          return Column(
+                            children: [
+                              Text('${date.year}年${date.month}月${date.day}日'),
+                              SizedBox(height: 8),
+                              PhotoList(
+                                photoPaths: photoPaths,
+                                photoTimes: photoTimes,
+                                photoTitles: photoTitles,
+                              ),
+                            ],
+                          );
+                        }
+                        return SizedBox.shrink();
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],

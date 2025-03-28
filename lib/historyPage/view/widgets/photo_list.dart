@@ -17,7 +17,7 @@ class PhotoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 500,
+      height: 600,
       child: ListView.builder(
         itemCount: photoTimes.length + photoTitles.length + photoPaths.length,
         itemBuilder: (context, index) {
