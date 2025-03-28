@@ -30,7 +30,8 @@ class _HomePage extends State<HomePage> implements HomePageCallback {
   }
 
   @override
-  void uiNoZyotaiWoHenkouSuruKansu() {//例です。好きな処理や名前に変えてください。
+  void uiNoZyotaiWoHenkouSuruKansu() {
+    //例です。好きな処理や名前に変えてください。
     setState(() {
       uiNoZyoutai1 = 1;
     });
@@ -39,8 +40,11 @@ class _HomePage extends State<HomePage> implements HomePageCallback {
   @override
   Widget build(BuildContext context) {
     return HomePageUI(
-        uiState: HomePageUIState(uiNoZyoutai1: uiNoZyoutai1, uiNoZyoutai2: uiNoZyoutai2),
-        callback: this
+      uiState: HomePageDataState(
+        uiNoZyoutai1: uiNoZyoutai1,
+        uiNoZyoutai2: uiNoZyoutai2,
+      ),
+      callback: this,
     );
   }
 }

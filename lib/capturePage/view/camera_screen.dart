@@ -1,4 +1,4 @@
-import 'package:app_d/custom_app_bar.dart';
+//import 'package:app_d/custom_app_bar.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -37,7 +37,7 @@ class CameraScreenState extends State<CameraScreen> {
   @override
   void dispose() {
     // ウィジェットが破棄されたら、コントローラーを破棄
-    print("破棄");
+    print("カメラ破棄");
     _controller.dispose();
     super.dispose();
   }
@@ -45,29 +45,47 @@ class CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     // プレビュー画面を表示
+    // 画面の向きを取得
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
+
     return Scaffold(
-      appBar: CustomAppBar(title: 'CapturePage'),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text('食事の撮影'),
+        leading: BackButton(
+          onPressed: () {
+            context.go('/homePage');
+          },
+        ),
+      ),
       body: Center(
         child: FutureBuilder<void>(
           future: _initializeControllerFuture,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              print("起動完了");
+              print("カメラ起動完了");
               return CameraPreview(_controller);
             } else if (snapshot.hasError) {
               print(snapshot.error);
               return Center(child: Text('エラーが発生しました\n${snapshot.error}'));
             } else {
-              print("起動中");
+              print("カメラ起動中");
               return const Center(child: CircularProgressIndicator());
             }
           },
         ),
       ),
       //撮影のボタン
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation:
+          isLandscape
+              ? RightCenterFloatingActionButtonLocation() // 横向きの場合は右中央
+              : FloatingActionButtonLocation.centerDocked, // 縦向きの場合は中央下部
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
+        padding:
+            isLandscape
+                ? const EdgeInsets.only(bottom: 0)
+                : const EdgeInsets.only(bottom: 20),
         child: SizedBox(
           width: 70,
           height: 70,
@@ -76,8 +94,8 @@ class CameraScreenState extends State<CameraScreen> {
               // 写真を撮る
               final image = await _controller.takePicture();
               // path を出力
-              print(image.path);
-              context.go('/capturePage/captureResult?imgPath=${image.path}');
+              print("撮影：${image.path}");
+              context.replace('/captureResult?imgPath=${image.path}');
             },
             backgroundColor: Colors.white,
             shape: CircleBorder(),
@@ -86,5 +104,22 @@ class CameraScreenState extends State<CameraScreen> {
         ),
       ),
     );
+  }
+}
+
+/// カスタム FloatingActionButtonLocation
+class RightCenterFloatingActionButtonLocation
+    extends FloatingActionButtonLocation {
+  @override
+  Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
+    final double fabX =
+        scaffoldGeometry.scaffoldSize.width -
+        scaffoldGeometry.floatingActionButtonSize.width -
+        16; // 右端から16pxの余白
+    final double fabY =
+        (scaffoldGeometry.scaffoldSize.height -
+            scaffoldGeometry.floatingActionButtonSize.height) /
+        2; // 垂直方向の中央
+    return Offset(fabX, fabY);
   }
 }

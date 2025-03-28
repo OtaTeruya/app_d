@@ -1,4 +1,4 @@
-package com.example.app_d
+package com.complete.mogmog_cho
 
 import io.flutter.embedding.android.FlutterActivity
 

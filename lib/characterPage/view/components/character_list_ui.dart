@@ -10,42 +10,38 @@ class CharacterListUI extends StatelessWidget {
   final CharacterListCallback callback;
   final CharacterManager characterData = CharacterManager();
 
-  CharacterListUI({
-    super.key,
-    required this.uiState,
-    required this.callback
-  });
+  CharacterListUI({super.key, required this.uiState, required this.callback});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: 16),
-        child: Column(
-            children: [
-              TextButton(
-                  onPressed: () => callback.hideCharacterListUI(),
-                  child: Text('CharacterListUIを隠す')
-              ),
-              Expanded(
-                  child: ListView(
-                      children: [
-                        for (var character in uiState.characters)
-                          ListTile(
-                              title: Opacity(
-                                  opacity: uiState.chosenCharacter.id == character.id ? 1.0 : 0.3,
-                                  child: CharacterProfile(
-                                      character: character,
-                                      characterLevel: character.level,
-                                      onClick: () => callback.chooseCharacter(character)
-                                  )
-                              )
-                          ),
-                      ]
-                  )
-              )
-            ]
-        )
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        children: [
+          Text('モンスターを選んでください'),
+          Expanded(
+            child: ListView(
+              children: [
+                for (var character in uiState.characters)
+                  ListTile(
+                    title: Opacity(
+                      opacity:
+                          uiState.chosenCharacter.id == character.id
+                              ? 1.0
+                              : 0.3,
+                      child: CharacterProfile(
+                        character: character,
+                        characterLevel: character.level,
+                        onClick: () => callback.chooseCharacter(character),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -56,6 +52,6 @@ class CharacterListUIState {
 
   CharacterListUIState({
     required this.chosenCharacter,
-    required this.characters
+    required this.characters,
   });
 }
