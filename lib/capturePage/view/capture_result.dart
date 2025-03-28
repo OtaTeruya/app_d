@@ -60,7 +60,7 @@ class _CaptureResultState extends State<CaptureResult> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'CapturePage'),
+      appBar: CustomAppBar(title: '食事の撮影'),
       body:
           geminiSuccess
               ? SingleChildScrollView(
@@ -137,7 +137,7 @@ class _CaptureResultState extends State<CaptureResult> {
                           )
                           : TextButton(
                             onPressed: () => context.go('/homePage'),
-                            child: Text('HomePageへ'),
+                            child: Text('タイトル画面へ'),
                           ),
                       Gap(10),
                     ],
@@ -157,7 +157,7 @@ class _CaptureResultState extends State<CaptureResult> {
                     ),
                     TextButton(
                       onPressed: () => context.go('/homePage'),
-                      child: Text('HomePageへ'),
+                      child: Text('タイトル画面へ'),
                     ),
                   ],
                 ),

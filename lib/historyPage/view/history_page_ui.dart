@@ -2,8 +2,8 @@ import 'package:app_d/database/record_dao.dart';
 import 'package:app_d/historyPage/view/widgets/calendar.dart';
 import 'package:app_d/historyPage/view/widgets/photo_list.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../custom_app_bar.dart';
 import 'history_page.dart';
 
 class HistoryPageUI extends StatelessWidget {
@@ -53,18 +53,19 @@ class HistoryPageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'HistoryPage'),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text('日記'),
+        leading: BackButton(
+          onPressed: () {
+            context.go('/homePage');
+          },
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1),
         child: ListView(
           children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                onPressed: () => callback.moveToHomePage(context),
-                child: Text('HomePageへ'),
-              ),
-            ),
             Calendar(selectedDate: _selectedDate),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),

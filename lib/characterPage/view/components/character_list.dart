@@ -8,13 +8,18 @@ import 'character_list_ui.dart';
 class CharacterList extends StatefulWidget {
   final Character chosenCharacter;
   final CharacterPageCallback callback;
-  const CharacterList({super.key, required this.chosenCharacter, required this.callback});
+  const CharacterList({
+    super.key,
+    required this.chosenCharacter,
+    required this.callback,
+  });
 
   @override
   State<CharacterList> createState() => _CharacterList();
 }
 
-class _CharacterList extends State<CharacterList> implements CharacterListCallback {
+class _CharacterList extends State<CharacterList>
+    implements CharacterListCallback {
   List<Character>? characters;
 
   @override
@@ -33,10 +38,6 @@ class _CharacterList extends State<CharacterList> implements CharacterListCallba
   @override
   void chooseCharacter(Character character) {
     widget.callback.chooseCharacter(character);
-  }
-
-  @override
-  void hideCharacterListUI() {
     widget.callback.hideCharacterListUI();
   }
 
@@ -47,16 +48,15 @@ class _CharacterList extends State<CharacterList> implements CharacterListCallba
     }
 
     return CharacterListUI(
-        uiState: CharacterListUIState(
-            chosenCharacter: widget.chosenCharacter,
-            characters: characters!
-        ),
-        callback: this
+      uiState: CharacterListUIState(
+        chosenCharacter: widget.chosenCharacter,
+        characters: characters!,
+      ),
+      callback: this,
     );
   }
 }
 
 abstract class CharacterListCallback {
   void chooseCharacter(Character character);
-  void hideCharacterListUI();
 }

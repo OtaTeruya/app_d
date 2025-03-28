@@ -52,7 +52,7 @@ class CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('CapturePage'),
+        title: Text('食事の撮影'),
         leading: BackButton(
           onPressed: () {
             context.go('/homePage');

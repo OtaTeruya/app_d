@@ -6,10 +6,10 @@ import 'go_router.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-  
+
   await initializeDateFormatting('ja_JP').then((_) {
     runApp(const MyApp());
-  }); 
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
         fontFamily: "Rounded",
         useMaterial3: true,
       ),
+      debugShowCheckedModeBanner: false,
       routerDelegate: goRouter.routerDelegate,
       routeInformationParser: goRouter.routeInformationParser,
       routeInformationProvider: goRouter.routeInformationProvider,
