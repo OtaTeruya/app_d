@@ -129,6 +129,17 @@ class _MealFormState extends State<MealForm> {
                 ),
               ),
               Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    "命名: ${widget.cuisineName}",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+              Divider(),
               SizedBox(
                 height: 320,
                 child:
@@ -149,11 +160,13 @@ class _MealFormState extends State<MealForm> {
                   TextButton(
                     onPressed: () async {
                       addDataToDB(context, '/homePage');
+                      addDataToDB(context, '/homePage');
                     },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
                     onPressed: () {
+                      addDataToDB(context, '/historyPage');
                       addDataToDB(context, '/historyPage');
                     },
                     child: Text('HistoryPageへ'),
