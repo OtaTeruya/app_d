@@ -178,13 +178,11 @@ class _MealFormState extends State<MealForm> {
                   TextButton(
                     onPressed: () async {
                       addDataToDB(context, '/homePage');
-                      addDataToDB(context, '/homePage');
                     },
                     child: Text('タイトル画面へ'),
                   ),
                   TextButton(
                     onPressed: () {
-                      addDataToDB(context, '/historyPage');
                       addDataToDB(context, '/historyPage');
                     },
                     child: Text('記録を見る'),
