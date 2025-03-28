@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Sample',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF66CC66)),
+        fontFamily: "Rounded",
         useMaterial3: true,
       ),
       routerDelegate: goRouter.routerDelegate,
