@@ -34,7 +34,7 @@ class CapturePageUI extends StatelessWidget {
             children: [
               Gap(30),
               const Text(
-                'カメラが見つかりませんでした。',
+                'カメラにアクセスすることができませんでした。',
                 style: TextStyle(color: Colors.red),
               ),
               //帰らせる

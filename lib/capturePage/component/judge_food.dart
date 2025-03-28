@@ -39,36 +39,44 @@ class JudgeFood {
           - No,0,Not_Food
         ''';
 
-  Future<String> judge(String imgPath) async{
-    var apiKey = dotenv.get('GEMINI_API_KEY', fallback: '');
-    if (apiKey.isEmpty) {
+  Future<String> judge(String imgPath) async {
+    try {
+      var apiKey = dotenv.get('GEMINI_API_KEY', fallback: '');
+      if (apiKey.isEmpty) {
         print('API Key取得失敗');
         exit(1);
-    }
-    
-    File imageFile = File(imgPath);
-    final bytes = await imageFile.readAsBytes();
+      }
 
-    final genModel = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey);
-    final content = [
+      File imageFile = File(imgPath);
+      final bytes = await imageFile.readAsBytes();
+
+      final genModel = GenerativeModel(
+        model: 'gemini-1.5-flash',
+        apiKey: apiKey,
+      );
+      final content = [
         Content.multi([
           TextPart(prompt),
           DataPart(getMimeType(imgPath), bytes),
-        ])
+        ]),
       ];
 
-    final response = await genModel.generateContent(content);
-    String resText = response.text ?? 'Gemini返答失敗';
-    return resText;
+      final response = await genModel.generateContent(content);
+      String resText = response.text ?? 'Gemini返答失敗';
+      return resText;
+    } catch (e) {
+      print('エラー: $e');
+      return 'Geminiエラー';
+    }
   }
 
   String getMimeType(String filePath) {
-  if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
-    return 'image/jpeg';
-  } else if (filePath.endsWith('.png')) {
-    return 'image/png';
-  } else {
-    throw UnsupportedError('サポートされていないファイル形式です: $filePath');
+    if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+      return 'image/jpeg';
+    } else if (filePath.endsWith('.png')) {
+      return 'image/png';
+    } else {
+      throw UnsupportedError('サポートされていないファイル形式です: $filePath');
+    }
   }
-}
 }
