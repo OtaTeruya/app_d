@@ -42,7 +42,7 @@ class _CaptureResultState extends State<CaptureResult> {
       widget.imgPath,
     ); // result = '食べ物か,信頼度,料理名';
     print('Gemini結果：$result');
-    if (result == 'Gemini返答失敗' || result == 'Geminiエラー'){
+    if (result == 'Gemini返答失敗' || result == 'Geminiエラー') {
       setState(() {
         geminiSuccess = false;
       });
@@ -147,7 +147,10 @@ class _CaptureResultState extends State<CaptureResult> {
               : Center(
                 child: Column(
                   children: [
-                    Text('エラーが発生しました', style: TextStyle(color: Colors.red)),
+                    Text(
+                      '時間をおいてもう一度お試しいただくか、ご利用の環境をご確認ください。',
+                      style: TextStyle(color: Colors.red),
+                    ),
                     TextButton(
                       onPressed: () => context.go('/homePage'),
                       child: Text('HomePageへ'),
