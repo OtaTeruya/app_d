@@ -75,7 +75,12 @@ class _MealFormState extends State<MealForm> {
       return;
     }
     // データを保存する処理
-    await recordDAO.insertRecord(widget.imgPath, getDateInt(), getTimeInt());
+    await recordDAO.insertRecord(
+      widget.imgPath,
+      getDateInt(),
+      getTimeInt(),
+      widget.cuisineName,
+    );
 
     // 最新のデータを取得
     var latestRecord = await recordDAO.getLatestRecord();
@@ -103,6 +108,7 @@ class _MealFormState extends State<MealForm> {
       context: context,
       barrierDismissible: false,
       builder: (_) {
+        return RewardDialog(nextPath: nextPath);
         return RewardDialog(nextPath: nextPath);
       },
     );
@@ -155,11 +161,13 @@ class _MealFormState extends State<MealForm> {
                   TextButton(
                     onPressed: () async {
                       addDataToDB(context, '/homePage');
+                      addDataToDB(context, '/homePage');
                     },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
                     onPressed: () {
+                      addDataToDB(context, '/historyPage');
                       addDataToDB(context, '/historyPage');
                     },
                     child: Text('HistoryPageへ'),
