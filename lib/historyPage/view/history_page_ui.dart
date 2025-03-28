@@ -32,7 +32,7 @@ class HistoryPageUI extends StatelessWidget {
       int minute = time ~/ 100 - hour * 100;
       photoTimes.add('$hour:${minute.toString().padLeft(2, '0')}');
     }
-    photoTimes = photoTimes.toList();
+    photoTimes = photoTimes.toSet().toList();
     return photoTimes;
   }
 
