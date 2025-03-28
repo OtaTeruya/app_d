@@ -147,9 +147,13 @@ class _CaptureResultState extends State<CaptureResult> {
               : Center(
                 child: Column(
                   children: [
-                    Text(
-                      '時間をおいてもう一度お試しいただくか、ご利用の環境をご確認ください。',
-                      style: TextStyle(color: Colors.red),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: Text(
+                        '時間をおいてもう一度お試しいただくか、ご利用の環境をご確認ください。',
+                        style: TextStyle(color: Colors.red),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                     TextButton(
                       onPressed: () => context.go('/homePage'),
