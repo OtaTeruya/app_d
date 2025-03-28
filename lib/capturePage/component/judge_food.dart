@@ -66,7 +66,7 @@ class JudgeFood {
       return resText;
     } catch (e) {
       print('エラー: $e');
-      return 'Gemini返答失敗';
+      return 'Geminiエラー';
     }
   }
 
