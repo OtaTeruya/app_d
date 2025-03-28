@@ -16,35 +16,29 @@ class PhotoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: SizedBox(
-        height: 800,
-        child: ListView.builder(
-          itemCount: photoPaths.length * 3,
-          itemBuilder: (context, index) {
-            int itemIndex = index ~/ 3;
-            if (index % 3 == 0) {
-              return Text(photoTimes[itemIndex], textAlign: TextAlign.center);
-            } else if (index % 3 == 1) {
-              return Text(
-                photoTitles[itemIndex],
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-              );
-            } else {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Image.file(
-                  File(photoPaths[itemIndex]),
-                  fit: BoxFit.cover,
-                ),
-              );
-            }
-          },
-        ),
+    return SizedBox(
+      height: 500,
+      child: ListView.builder(
+        itemCount: photoTimes.length + photoTitles.length + photoPaths.length,
+        itemBuilder: (context, index) {
+          int itemIndex = index ~/ 3;
+          if (index % 3 == 0) {
+            return Text(photoTimes[itemIndex], textAlign: TextAlign.center);
+          } else if (index % 3 == 1) {
+            return Text(
+              photoTitles[itemIndex],
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            );
+          } else {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Image.file(File(photoPaths[itemIndex]), fit: BoxFit.cover),
+            );
+          }
+        },
       ),
     );
   }

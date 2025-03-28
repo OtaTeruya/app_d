@@ -19,6 +19,7 @@ class HistoryPageUI extends StatelessWidget {
     for (var record in records) {
       photoPaths.add(record['path']);
     }
+    photoPaths = photoPaths.toSet().toList();
     return photoPaths;
   }
 
@@ -31,6 +32,7 @@ class HistoryPageUI extends StatelessWidget {
       int minute = time ~/ 100 - hour * 100;
       photoTimes.add('$hour:${minute.toString().padLeft(2, '0')}');
     }
+    photoTimes = photoTimes.toSet().toList();
     return photoTimes;
   }
 
@@ -38,11 +40,9 @@ class HistoryPageUI extends StatelessWidget {
     var records = await RecordDAO().getRecordsByDate(date);
     List<String> photoTitles = [];
     for (var record in records) {
-      int time = record['time'];
-      int hour = time ~/ 10000;
-      int minute = time ~/ 100 - hour * 100;
-      photoTitles.add('$hour:${minute.toString().padLeft(2, '0')}');
+      photoTitles.add(record['cuisine']);
     }
+    photoTitles = photoTitles.toSet().toList();
     return photoTitles;
   }
 
