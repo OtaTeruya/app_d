@@ -23,6 +23,8 @@ class _CaptureResultState extends State<CaptureResult> {
   void initState() {
     super.initState();
     _checkFileExists(); // ファイルの存在を確認
+    print("表示:${widget.imgPath}");
+    print('Gemini問い合わせ');
     askGemini();
   }
 
@@ -33,21 +35,22 @@ class _CaptureResultState extends State<CaptureResult> {
     });
   }
 
+  // Geminiに画像を問い合わせる
   void askGemini() async {
     String result = await JudgeFood().judge(
       widget.imgPath,
     ); // result = '食べ物か,信頼度,料理名';
     print('Gemini結果：$result');
+    if (result == 'Gemini返答失敗') return;
     List<String> resultList = result.split(',');
     setState(() {
       isFood = resultList[0] == 'Yes' ? true : false;
-      foodName = resultList[2];
+      foodName = resultList[2].trimRight();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.imgPath);
     return Scaffold(
       appBar: CustomAppBar(title: 'CapturePage'),
       body: SingleChildScrollView(
@@ -99,8 +102,8 @@ class _CaptureResultState extends State<CaptureResult> {
                         isFood == true
                             ? TextButton(
                               onPressed: () {
-                                context.go(
-                                  '/capturePage/captureResult/mealForm?imgPath=${widget.imgPath}&foodName=$foodName',
+                                context.push(
+                                  '/mealForm?imgPath=${widget.imgPath}&foodName=$foodName',
                                 );
                               },
                               style: TextButton.styleFrom(

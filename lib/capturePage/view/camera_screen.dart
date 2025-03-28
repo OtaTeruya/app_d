@@ -46,7 +46,8 @@ class CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
     // プレビュー画面を表示
     // 画面の向きを取得
-    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     return Scaffold(
       appBar: AppBar(
@@ -76,11 +77,15 @@ class CameraScreenState extends State<CameraScreen> {
         ),
       ),
       //撮影のボタン
-      floatingActionButtonLocation: isLandscape
-          ? RightCenterFloatingActionButtonLocation() // 横向きの場合は右中央
-          : FloatingActionButtonLocation.centerDocked, // 縦向きの場合は中央下部
+      floatingActionButtonLocation:
+          isLandscape
+              ? RightCenterFloatingActionButtonLocation() // 横向きの場合は右中央
+              : FloatingActionButtonLocation.centerDocked, // 縦向きの場合は中央下部
       floatingActionButton: Padding(
-        padding: isLandscape ? const EdgeInsets.only(bottom: 0) : const EdgeInsets.only(bottom: 20),
+        padding:
+            isLandscape
+                ? const EdgeInsets.only(bottom: 0)
+                : const EdgeInsets.only(bottom: 20),
         child: SizedBox(
           width: 70,
           height: 70,
@@ -89,10 +94,8 @@ class CameraScreenState extends State<CameraScreen> {
               // 写真を撮る
               final image = await _controller.takePicture();
               // path を出力
-              print(image.path);
-              context.replace(
-                '/capturePage/captureResult?imgPath=${image.path}',
-              );
+              print("撮影：${image.path}");
+              context.replace('/captureResult?imgPath=${image.path}');
             },
             backgroundColor: Colors.white,
             shape: CircleBorder(),
@@ -105,11 +108,18 @@ class CameraScreenState extends State<CameraScreen> {
 }
 
 /// カスタム FloatingActionButtonLocation
-class RightCenterFloatingActionButtonLocation extends FloatingActionButtonLocation {
+class RightCenterFloatingActionButtonLocation
+    extends FloatingActionButtonLocation {
   @override
   Offset getOffset(ScaffoldPrelayoutGeometry scaffoldGeometry) {
-    final double fabX = scaffoldGeometry.scaffoldSize.width - scaffoldGeometry.floatingActionButtonSize.width - 16; // 右端から16pxの余白
-    final double fabY = (scaffoldGeometry.scaffoldSize.height - scaffoldGeometry.floatingActionButtonSize.height) / 2; // 垂直方向の中央
+    final double fabX =
+        scaffoldGeometry.scaffoldSize.width -
+        scaffoldGeometry.floatingActionButtonSize.width -
+        16; // 右端から16pxの余白
+    final double fabY =
+        (scaffoldGeometry.scaffoldSize.height -
+            scaffoldGeometry.floatingActionButtonSize.height) /
+        2; // 垂直方向の中央
     return Offset(fabX, fabY);
   }
 }

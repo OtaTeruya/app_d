@@ -7,13 +7,13 @@ import '../../custom_app_bar.dart';
 import 'capture_page.dart';
 
 class CapturePageUI extends StatelessWidget {
-  final CapturePageUIState uiState;
+  // final CapturePageUIState uiState;
   final CapturePageCallback callback;
   final CameraDescription? camera;
 
   const CapturePageUI({
     super.key,
-    required this.uiState,
+    // required this.uiState,
     required this.callback,
     required this.camera,
   });
@@ -23,7 +23,7 @@ class CapturePageUI extends StatelessWidget {
     print(camera);
     if (camera != null) {
       //カメラが存在する場合
-      return CameraScreen(camera: camera!); 
+      return CameraScreen(camera: camera!);
     } else {
       //カメラが存在しない場合
       return Scaffold(
@@ -50,9 +50,8 @@ class CapturePageUI extends StatelessWidget {
   }
 }
 
-class CapturePageUIState {
-  final int uiNoZyoutai1;
-  final String uiNoZyoutai2;
+// class CapturePageUIState {
+//   final bool isCurrentLocation;
 
-  CapturePageUIState({required this.uiNoZyoutai1, required this.uiNoZyoutai2});
-}
+//   CapturePageUIState({required this.isCurrentLocation,});
+// }

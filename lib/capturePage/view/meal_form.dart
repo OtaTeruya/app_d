@@ -80,7 +80,7 @@ class _MealFormState extends State<MealForm> {
     // 最新のデータを取得
     var latestRecord = await recordDAO.getLatestRecord();
     latestRecordText = '最新のデータ: $latestRecord';
-    print(latestRecordText);  //登録データの確認
+    print(latestRecordText);
 
     rewardHndling(nextPath);
   }
@@ -124,10 +124,14 @@ class _MealFormState extends State<MealForm> {
                 ),
               ),
               Divider(),
-              Center(
-                child: Text(
-                  "命名: ${widget.foodName}",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    "命名: ${widget.foodName}",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,),
+                  ),
                 ),
               ),
               Divider(),

@@ -33,7 +33,8 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   }
 
   @override
-  void setCamera() async {  //カメラの設定
+  void setCamera() async {
+    //カメラの設定
     // デバイスで使用可能なカメラのリストを取得
     final cameras = await availableCameras();
     if (cameras.isEmpty) {
@@ -54,10 +55,9 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   @override
   Widget build(BuildContext context) {
     return CapturePageUI(
-      uiState: CapturePageUIState(
-        uiNoZyoutai1: uiNoZyoutai1,
-        uiNoZyoutai2: uiNoZyoutai2,
-      ),
+      // uiState: CapturePageUIState(
+      //   isCurrentLocation: isCurrentLocation,
+      // ),
       callback: this,
       camera: camera,
     );
