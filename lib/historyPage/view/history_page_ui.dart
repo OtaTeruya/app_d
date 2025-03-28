@@ -34,6 +34,18 @@ class HistoryPageUI extends StatelessWidget {
     return photoTimes;
   }
 
+  Future<List<String>> pickPhotoTitles(int date) async {
+    var records = await RecordDAO().getRecordsByDate(date);
+    List<String> photoTitles = [];
+    for (var record in records) {
+      int time = record['time'];
+      int hour = time ~/ 10000;
+      int minute = time ~/ 100 - hour * 100;
+      photoTitles.add('$hour:${minute.toString().padLeft(2, '0')}');
+    }
+    return photoTitles;
+  }
+
   int convertDateTimeToInt(DateTime dateTime) {
     int date = int.parse(
       '${dateTime.year}${dateTime.month.toString().padLeft(2, '0')}${dateTime.day.toString().padLeft(2, '0')}',
@@ -61,12 +73,14 @@ class HistoryPageUI extends StatelessWidget {
                   return FutureBuilder<List<dynamic>>(
                     future: Future.wait([
                       pickPhotoPaths(convertDateTimeToInt(date)), // 写真のパス取得
-                      pickPhotoTimes(convertDateTimeToInt(date)), // 撮影時間取得
+                      pickPhotoTimes(convertDateTimeToInt(date)),
+                      pickPhotoTitles(convertDateTimeToInt(date)),
                     ]),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         List<String> photoPaths = snapshot.data?[0] ?? [];
                         List<String> photoTimes = snapshot.data?[1] ?? [];
+                        List<String> photoTitles = snapshot.data?[2] ?? [];
                         return Column(
                           children: [
                             Text('${date.year}年${date.month}月${date.day}日'),
@@ -74,6 +88,7 @@ class HistoryPageUI extends StatelessWidget {
                             PhotoList(
                               photoPaths: photoPaths,
                               photoTimes: photoTimes,
+                              photoTitles: photoTitles,
                             ),
                           ],
                         );

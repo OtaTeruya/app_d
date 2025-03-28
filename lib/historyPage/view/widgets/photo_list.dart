@@ -3,13 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 class PhotoList extends StatelessWidget {
-  final List<String> photoPaths;
   final List<String> photoTimes;
+  final List<String> photoTitles;
+  final List<String> photoPaths;
 
   const PhotoList({
     super.key,
-    required this.photoPaths,
     required this.photoTimes,
+    required this.photoTitles,
+    required this.photoPaths,
   });
 
   @override
@@ -17,20 +19,27 @@ class PhotoList extends StatelessWidget {
     return SizedBox(
       height: 800,
       child: ListView.builder(
-        itemCount: photoPaths.length + photoTimes.length,
+        itemCount: photoPaths.length * 3,
         itemBuilder: (context, index) {
-          if (index % 2 == 0) {
-            int timeIndex = index ~/ 2;
-            //String formattedTime = DateFormat('HH:mm:ss').format(photoTimes[timeIndex]);
+          int itemIndex = index ~/ 3;
+          if (index % 3 == 0) {
             return Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(photoTimes[timeIndex], textAlign: TextAlign.center),
+              child: Text(photoTimes[itemIndex], textAlign: TextAlign.center),
+            );
+          } else if (index % 3 == 1) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                photoTitles[itemIndex],
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
             );
           } else {
-            int pathIndex = index ~/ 2;
             return Padding(
               padding: const EdgeInsets.all(8),
-              child: Image.file(File(photoPaths[pathIndex]), fit: BoxFit.cover),
+              child: Image.file(File(photoPaths[itemIndex]), fit: BoxFit.cover),
             );
           }
         },
