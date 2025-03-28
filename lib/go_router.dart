@@ -16,32 +16,32 @@ final goRouter = GoRouter(
       name: 'homePage',
       builder: (context, state) => const HomePage(),
     ),
+    //撮影画面
     GoRoute(
       path: '/capturePage',
       name: 'capturePage',
-      routes: [
-        GoRoute(
-          path: 'captureResult',
-          name: 'captureResult',
-          routes: [
-            GoRoute(
-              path: 'mealForm',
-              name: 'mealForm',
-              builder: (context, state) {
-                final map = state.uri.queryParameters;
-                String imgPath = map['imgPath']!;
-                return MealForm(imgPath: imgPath, cuisineName: 'cuisineName');
-              },
-            ),
-          ],
-          builder: (context, state) {
-            final map = state.uri.queryParameters;
-            String imgPath = map['imgPath']!;
-            return CaptureResult(imgPath: imgPath);
-          },
-        ),
-      ],
       builder: (context, state) => const CapturePage(),
+    ),
+    // 撮影結果画面
+    GoRoute(
+      path: '/captureResult',
+      name: 'captureResult',
+      builder: (context, state) {
+        final map = state.uri.queryParameters;
+        String imgPath = map['imgPath']!;
+        return CaptureResult(imgPath: imgPath);
+      },
+    ),
+    // データベース書き込み画面
+    GoRoute(
+      path: '/mealForm',
+      name: 'mealForm',
+      builder: (context, state) {
+        final map = state.uri.queryParameters;
+        String imgPath = map['imgPath']!;
+        String foodName = map['foodName']!;
+        return MealForm(imgPath: imgPath, cuisineName: foodName);
+      },
     ),
 
     GoRoute(
