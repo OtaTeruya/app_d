@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:app_d/capturePage/component/reward_dialog.dart';
-import 'package:app_d/capturePage/widget/typing_animation_text.dart';
 import 'package:app_d/characterPage/utils/food_manager.dart';
 import 'package:app_d/custom_app_bar.dart';
 import 'package:app_d/database/record_dao.dart';
@@ -26,12 +26,17 @@ class _MealFormState extends State<MealForm> {
   String recordsText = "特定の日付のデータ: なし";
   DateTime? initLatestRecordTime; //前回のデータの時間
 
+  bool fade = false;
+
   @override
   void initState() {
     super.initState();
     _checkFileExists(); // ファイルの存在を確認
     //handleDatabaseOperations(); // データベース操作を初期化時に呼び出す
     getLatestRecord(); // 前回のデータの時間を取得（最初だけ）
+    setState(() {
+      fade = true;
+    });
   }
 
   Future<void> _checkFileExists() async {
@@ -124,35 +129,47 @@ class _MealFormState extends State<MealForm> {
             children: [
               Gap(10),
               Center(
-                child: Text(
+                child: fade ? Text(
                   "${now.year.toString()}年${now.month.toString()}月${now.day.toString()}日",
                   style: const TextStyle(fontSize: 20),
-                ),
+                ) : const Text(''),
               ),
               Divider(),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
-                  child: TypingAnimationText(
-                    "命名: ${widget.cuisineName}",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                  child: AnimatedTextKit(
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        "命名: ${widget.cuisineName}",
+                        textStyle: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        speed: const Duration(milliseconds: 200),
+                      ),
+                    ],
+                    isRepeatingAnimation: false,
                   ),
                 ),
               ),
               Divider(),
               SizedBox(
                 height: 320,
-                child:
-                    fileExists == null
-                        ? const Center(
-                          child: CircularProgressIndicator(),
-                        ) // ローディング中
-                        : fileExists == true
-                        ? Image.file(File(widget.imgPath)) // ファイルが存在する場合
-                        : const Center(
-                          child: Text("データが存在しません"),
-                        ), // ファイルが存在しない場合
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child:
+                      fileExists == null
+                          ? const Center(
+                            child: CircularProgressIndicator(),
+                          ) // ローディング中
+                          : fileExists == true
+                          ? Image.file(File(widget.imgPath)) // ファイルが存在する場合
+                          : const Center(
+                            child: Text("データが存在しません"),
+                          ), // ファイルが存在しない場合
+                ),
               ),
               Divider(),
               Row(
@@ -163,14 +180,14 @@ class _MealFormState extends State<MealForm> {
                       addDataToDB(context, '/homePage');
                       addDataToDB(context, '/homePage');
                     },
-                    child: Text('HomePageへ'),
+                    child: Text('タイトル画面へ'),
                   ),
                   TextButton(
                     onPressed: () {
                       addDataToDB(context, '/historyPage');
                       addDataToDB(context, '/historyPage');
                     },
-                    child: Text('HistoryPageへ'),
+                    child: Text('記録を見る'),
                   ),
                 ],
               ),
