@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_d/capturePage/component/reward_dialog.dart';
+import 'package:app_d/capturePage/widget/typing_animation_text.dart';
 import 'package:app_d/characterPage/utils/food_manager.dart';
 import 'package:app_d/custom_app_bar.dart';
 import 'package:app_d/database/record_dao.dart';
@@ -133,7 +134,7 @@ class _MealFormState extends State<MealForm> {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
-                  child: Text(
+                  child: TypingAnimationText(
                     "命名: ${widget.cuisineName}",
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
