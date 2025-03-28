@@ -38,7 +38,7 @@ class CageWithCharacterUI extends StatelessWidget {
                     ),
                   )
               ),
-              AnimatedPositioned(//キャラクターの位置を管理
+              AnimatedPositioned(//モンスターの位置を管理
                 duration: const Duration(milliseconds: 1000),
                 top: uiState.topPosition,
                 left: uiState.leftPosition,

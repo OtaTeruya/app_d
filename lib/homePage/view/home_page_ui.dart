@@ -40,7 +40,7 @@ class HomePageUIState extends State<HomePageUI> {
               SizedBox(height: 28),
               _menuButton(
                 () => widget.callback.moveToHistoryPage(context),
-                '履歴を見る',
+                '日記を見る',
               ),
               SizedBox(height: 28),
               _menuButton(

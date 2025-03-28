@@ -19,7 +19,7 @@ class RewardDialog extends StatelessWidget {
           SizedBox(height: 150, child: Image.asset("images/hamburger.png")),
         ],
       ),
-      content: Text('キャラクターの様子を見に行きますか？'),
+      content: Text('モンスターの様子を見に行きますか？'),
       actions: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

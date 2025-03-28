@@ -122,17 +122,20 @@ class _MealFormState extends State<MealForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: 'CapturePage'),
+      appBar: CustomAppBar(title: '食事の撮影'),
       body: SingleChildScrollView(
         child: Center(
           child: Column(
             children: [
               Gap(10),
               Center(
-                child: fade ? Text(
-                  "${now.year.toString()}年${now.month.toString()}月${now.day.toString()}日",
-                  style: const TextStyle(fontSize: 20),
-                ) : const Text(''),
+                child:
+                    fade
+                        ? Text(
+                          "${now.year.toString()}年${now.month.toString()}月${now.day.toString()}日",
+                          style: const TextStyle(fontSize: 20),
+                        )
+                        : const Text(''),
               ),
               Divider(),
               Padding(
@@ -185,7 +188,7 @@ class _MealFormState extends State<MealForm> {
                     onPressed: () {
                       addDataToDB(context, '/historyPage');
                     },
-                    child: Text('記録を見る'),
+                    child: Text('日記を見る'),
                   ),
                 ],
               ),

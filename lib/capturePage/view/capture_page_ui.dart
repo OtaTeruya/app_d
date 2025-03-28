@@ -27,7 +27,7 @@ class CapturePageUI extends StatelessWidget {
     } else {
       //カメラが存在しない場合
       return Scaffold(
-        appBar: CustomAppBar(title: 'CapturePage'),
+        appBar: CustomAppBar(title: '食事の撮影'),
         body: Center(
           child: Column(
             //カメラが存在しないことを表示
@@ -40,7 +40,7 @@ class CapturePageUI extends StatelessWidget {
               //帰らせる
               TextButton(
                 onPressed: () => callback.moveToHomePage(context),
-                child: Text('HomePageへ'),
+                child: Text('タイトル画面へ'),
               ),
             ],
           ),
