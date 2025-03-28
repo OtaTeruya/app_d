@@ -40,7 +40,7 @@ final goRouter = GoRouter(
         final map = state.uri.queryParameters;
         String imgPath = map['imgPath']!;
         String foodName = map['foodName']!;
-        return MealForm(imgPath: imgPath, foodName: foodName);
+        return MealForm(imgPath: imgPath, cuisineName: foodName);
       },
     ),
 

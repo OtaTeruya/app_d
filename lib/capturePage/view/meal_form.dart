@@ -9,9 +9,9 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class MealForm extends StatefulWidget {
-  const MealForm({super.key, required this.imgPath, required this.foodName});
+  const MealForm({super.key, required this.imgPath, required this.cuisineName});
   final String imgPath;
-  final String foodName;
+  final String cuisineName;
 
   @override
   State<MealForm> createState() => _MealFormState();
@@ -109,7 +109,6 @@ class _MealFormState extends State<MealForm> {
       barrierDismissible: false,
       builder: (_) {
         return RewardDialog(nextPath: nextPath);
-        return RewardDialog(nextPath: nextPath);
       },
     );
   }
@@ -135,8 +134,8 @@ class _MealFormState extends State<MealForm> {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    "命名: ${widget.foodName}",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600,),
+                    "命名: ${widget.cuisineName}",
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
                   ),
                 ),
               ),
