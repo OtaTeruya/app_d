@@ -32,7 +32,7 @@ class HistoryPageUI extends StatelessWidget {
       int minute = time ~/ 100 - hour * 100;
       photoTimes.add('$hour:${minute.toString().padLeft(2, '0')}');
     }
-    photoTimes = photoTimes.toSet().toList();
+    photoTimes = photoTimes.toList();
     return photoTimes;
   }
 
@@ -86,6 +86,11 @@ class HistoryPageUI extends StatelessWidget {
                           List<String> photoPaths = snapshot.data?[0] ?? [];
                           List<String> photoTimes = snapshot.data?[1] ?? [];
                           List<String> photoTitles = snapshot.data?[2] ?? [];
+
+                          print("photoPaths: $photoPaths\n");
+                          print("photoTimes: $photoTimes\n");
+                          print("photoTitles: $photoTitles\n");
+
                           return Column(
                             children: [
                               Text('${date.year}年${date.month}月${date.day}日'),
