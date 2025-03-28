@@ -17,36 +17,39 @@ class HomePageUIState extends State<HomePageUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF669966),
-      body: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 160),
-            Text(
-              "もぐもぐ帳",
-              style: TextStyle(
-                fontSize: 48,
-                fontWeight: FontWeight.w900,
-                color: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(height: 140),
+              Text(
+                "もぐもぐ帳",
+                style: TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.white,
+                ),
               ),
-            ),
-            SizedBox(height: 32),
-            Expanded(child: Container(child: _charactersBox())),
-            _menuButton(
-              () => widget.callback.moveToCapturePage(context),
-              '食事の写真を撮る',
-            ),
-            SizedBox(height: 28),
-            _menuButton(
-              () => widget.callback.moveToHistoryPage(context),
-              '履歴を見る',
-            ),
-            SizedBox(height: 28),
-            _menuButton(
-              () => widget.callback.moveToCharacterPage(context),
-              'モンスターに会いに行く',
-            ),
-            SizedBox(height: 80),
-          ],
+              SizedBox(height: 32),
+              Container(child: _charactersBox()),
+              SizedBox(height: 100),
+              _menuButton(
+                () => widget.callback.moveToCapturePage(context),
+                '食事の写真を撮る',
+              ),
+              SizedBox(height: 28),
+              _menuButton(
+                () => widget.callback.moveToHistoryPage(context),
+                '履歴を見る',
+              ),
+              SizedBox(height: 28),
+              _menuButton(
+                () => widget.callback.moveToCharacterPage(context),
+                'モンスターに会いに行く',
+              ),
+              SizedBox(height: 80),
+            ],
+          ),
         ),
       ),
     );
