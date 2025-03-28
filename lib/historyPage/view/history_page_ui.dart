@@ -61,9 +61,12 @@ class HistoryPageUI extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: ListView(
           children: [
-            TextButton(
-              onPressed: () => callback.moveToHomePage(context),
-              child: Text('HomePageへ'),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                onPressed: () => callback.moveToHomePage(context),
+                child: Text('HomePageへ'),
+              ),
             ),
             Calendar(selectedDate: _selectedDate),
             Center(
