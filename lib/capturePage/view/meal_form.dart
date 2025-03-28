@@ -9,8 +9,9 @@ import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 
 class MealForm extends StatefulWidget {
-  const MealForm({super.key, required this.imgPath});
+  const MealForm({super.key, required this.imgPath, required this.cuisineName});
   final String imgPath;
+  final String cuisineName;
 
   @override
   State<MealForm> createState() => _MealFormState();
@@ -74,7 +75,12 @@ class _MealFormState extends State<MealForm> {
       return;
     }
     // データを保存する処理
-    await recordDAO.insertRecord(widget.imgPath, getDateInt(), getTimeInt());
+    await recordDAO.insertRecord(
+      widget.imgPath,
+      getDateInt(),
+      getTimeInt(),
+      widget.cuisineName,
+    );
 
     // 最新のデータを取得
     var latestRecord = await recordDAO.getLatestRecord();
@@ -102,7 +108,7 @@ class _MealFormState extends State<MealForm> {
       context: context,
       barrierDismissible: false,
       builder: (_) {
-        return RewardDialog(nextPath: nextPath,);
+        return RewardDialog(nextPath: nextPath);
       },
     );
   }
@@ -142,13 +148,13 @@ class _MealFormState extends State<MealForm> {
                 children: [
                   TextButton(
                     onPressed: () async {
-                      addDataToDB(context,'/homePage');
+                      addDataToDB(context, '/homePage');
                     },
                     child: Text('HomePageへ'),
                   ),
                   TextButton(
                     onPressed: () {
-                      addDataToDB(context,'/historyPage');
+                      addDataToDB(context, '/historyPage');
                     },
                     child: Text('HistoryPageへ'),
                   ),
