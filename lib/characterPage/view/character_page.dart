@@ -54,6 +54,9 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     if (foodCount! <= 0) {
       return false;
     }
+    if (chosenCharacterLevel! >= chosenCharacter!.maxLevel) {
+      return false;
+    }
 
     FoodManager().subtractSavedFoodCount();
     CharacterManager().addSavedCharacterLevel(chosenCharacter!.id);
