@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-import 'go_router.dart';
+import 'home/view/home.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
@@ -17,17 +17,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       title: 'Sample',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF66CC66)),
         fontFamily: "Rounded",
         useMaterial3: true,
       ),
+      home: Home(),
       debugShowCheckedModeBanner: false,
-      routerDelegate: goRouter.routerDelegate,
-      routeInformationParser: goRouter.routeInformationParser,
-      routeInformationProvider: goRouter.routeInformationProvider,
     );
   }
 }

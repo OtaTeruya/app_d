@@ -1,7 +1,6 @@
 import 'package:app_d/characterPage/utils/character_manager.dart';
 import 'package:app_d/characterPage/utils/food_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../utils/character.dart';
 import 'character_page_ui.dart';
@@ -39,11 +38,6 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     setState(() {
       foodCount = cnt;
     });
-  }
-
-  @override
-  void moveToHomePage(BuildContext context) {
-    context.go('/homePage');
   }
 
   @override
@@ -109,7 +103,6 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
 }
 
 abstract class CharacterPageCallback {
-  void moveToHomePage(BuildContext context);
   bool feedingFood();
   void showCharacterListUI();
   void hideCharacterListUI();
