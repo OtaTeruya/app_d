@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
 import 'home_page_ui.dart';
 
@@ -11,38 +10,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> implements HomePageCallback {
-  int uiNoZyoutai1 = 0;
-  String uiNoZyoutai2 = 'hoge';
+  int focusedPageIndex = AppPage.values.indexOf(AppPage.history);
+  bool isBottomBarTranslucent = false;
 
   @override
-  void moveToCapturePage(BuildContext context) {
-    context.go('/capturePage');
-  }
-
-  @override
-  void moveToCharacterPage(BuildContext context) {
-    context.go('/characterPage');
-  }
-
-  @override
-  void moveToHistoryPage(BuildContext context) {
-    context.go('/historyPage');
-  }
-
-  @override
-  void uiNoZyotaiWoHenkouSuruKansu() {
-    //例です。好きな処理や名前に変えてください。
+  void moveToCapturePage() {
     setState(() {
-      uiNoZyoutai1 = 1;
+      focusedPageIndex = AppPage.values.indexOf(AppPage.capture);
     });
+  }
+
+  @override
+  void moveToHistoryPage() {
+    setState(() {
+      focusedPageIndex = AppPage.values.indexOf(AppPage.history);
+    });
+  }
+
+  @override
+  void moveToCharacterPage() {
+    setState(() {
+      focusedPageIndex = AppPage.values.indexOf(AppPage.character);
+    });
+  }
+
+  @override
+  bool isFocused(AppPage appPage) {
+    return focusedPageIndex == AppPage.values.indexOf(appPage);
   }
 
   @override
   Widget build(BuildContext context) {
     return HomePageUI(
       uiState: HomePageDataState(
-        uiNoZyoutai1: uiNoZyoutai1,
-        uiNoZyoutai2: uiNoZyoutai2,
+          focusedPageIndex: focusedPageIndex,
+          isBottomBarTranslucent: isBottomBarTranslucent
       ),
       callback: this,
     );
@@ -50,8 +52,10 @@ class _HomePage extends State<HomePage> implements HomePageCallback {
 }
 
 abstract class HomePageCallback {
-  void moveToCapturePage(BuildContext context);
-  void moveToHistoryPage(BuildContext context);
-  void moveToCharacterPage(BuildContext context);
-  void uiNoZyotaiWoHenkouSuruKansu();
+  void moveToCapturePage();
+  void moveToHistoryPage();
+  void moveToCharacterPage();
+  bool isFocused(AppPage appPage);
 }
+
+enum AppPage { capture, history, character }

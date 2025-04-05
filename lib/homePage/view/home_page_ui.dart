@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
+import '../../capturePage/view/capture_page.dart';
+import '../../characterPage/view/character_page.dart';
+import '../../historyPage/view/history_page.dart';
 import 'home_page.dart';
 
 class HomePageUI extends StatefulWidget {
@@ -13,112 +17,113 @@ class HomePageUI extends StatefulWidget {
 }
 
 class HomePageUIState extends State<HomePageUI> {
+  final tabBarHeight = 52.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF669966),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              SizedBox(height: 140),
-              Text(
-                "もぐもぐ帳",
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.white,
-                ),
+        body: Stack(
+          children: [
+            Container(
+              padding: EdgeInsets.only(
+                  bottom: widget.uiState.isBottomBarTranslucent ? 0 : tabBarHeight
               ),
-              SizedBox(height: 32),
-              Container(child: _charactersBox()),
-              SizedBox(height: 100),
-              _menuButton(
-                () => widget.callback.moveToCapturePage(context),
-                '食事の写真を撮る',
+              child: IndexedStack(
+                index: widget.uiState.focusedPageIndex,
+                children: [
+                  CapturePage(),
+                  HistoryPage(),
+                  CharacterPage(),
+                ],
               ),
-              SizedBox(height: 28),
-              _menuButton(
-                () => widget.callback.moveToHistoryPage(context),
-                '日記を見る',
-              ),
-              SizedBox(height: 28),
-              _menuButton(
-                () => widget.callback.moveToCharacterPage(context),
-                'モンスターに会いに行く',
-              ),
-              SizedBox(height: 80),
-            ],
-          ),
-        ),
-      ),
+            ),
+            Column(
+              children: [
+                Spacer(),
+                Container(
+                    height: tabBarHeight,
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: Colors.grey,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        _tabButton(
+                            widget.callback.moveToCapturePage,
+                            widget.callback.isFocused(AppPage.capture),
+                            "images/icon_capture_focused.png",
+                            "images/icon_capture_unfocused.png",
+                            "撮影"
+                        ),
+                        _tabButton(
+                            widget.callback.moveToHistoryPage,
+                            widget.callback.isFocused(AppPage.history),
+                            "images/icon_calendar_focused.png",
+                            "images/icon_calendar_unfocused.png",
+                            "記録"
+                        ),
+                        _tabButton(
+                            widget.callback.moveToCharacterPage,
+                            widget.callback.isFocused(AppPage.character),
+                            "images/icon_character_focused.png",
+                            "images/icon_character_unfocused.png",
+                            "育成"
+                        ),
+                      ],
+                    )
+                )
+              ],
+            )
+          ],
+        )
     );
   }
 
-  Widget _menuButton(VoidCallback onPressed, String text) {
-    return SizedBox(
-      width: 280,
-      height: 48,
-      child: TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.white,
-          foregroundColor: Color(0xFF669966),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-        ),
-        child: Text(text, style: TextStyle(fontSize: 18)),
-      ),
-    );
-  }
-
-  Widget _charactersBox() {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset("images/character2.png"),
+  Widget _tabButton(
+      VoidCallback onClicked, bool isFocused,
+      String focusedImageAsset, String unFocusedImageAsset, String text) {
+    return Expanded(
+        child: ElevatedButton(
+            onPressed: onClicked,
+            style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.zero,
+                )
             ),
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset("images/character4.png"),
-            ),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset("images/character1.png"),
-            ),
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset("images/character3.png"),
-            ),
-            SizedBox(
-              height: 100,
-              width: 100,
-              child: Image.asset("images/character5.png"),
-            ),
-          ],
-        ),
-      ],
+            child: Column(
+                children: [
+                  Gap(4),
+                  Expanded(
+                    child: Image.asset(
+                      isFocused ? focusedImageAsset : unFocusedImageAsset,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  Text(
+                    text,
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: isFocused ? Color(0xFF547F54) : Color(0xFF7F7F7F)
+                    ),
+                  ),
+                ]
+            )
+        )
     );
   }
 }
 
 class HomePageDataState {
-  final int uiNoZyoutai1;
-  final String uiNoZyoutai2;
+  final int focusedPageIndex;
+  final bool isBottomBarTranslucent;
 
-  HomePageDataState({required this.uiNoZyoutai1, required this.uiNoZyoutai2});
+  HomePageDataState({required this.focusedPageIndex, required this.isBottomBarTranslucent});
 }
