@@ -33,7 +33,8 @@ class CameraScreenState extends State<CameraScreen> implements CameraScreenCallb
       ResolutionPreset.medium,
       enableAudio: false,
     );
-    tmpCameraController.initialize();
+    await tmpCameraController.initialize();
+    if (!mounted) return; //widgetが破棄されてたら何もしない
     setState(() {
       cameraController = tmpCameraController;
     });
