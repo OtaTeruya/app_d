@@ -26,27 +26,12 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
   @override
   void initState() {
     super.initState();
-    _rewardHandling(_addDataToDB);
+    _rewardHandling(() {
+      _addDataToDB(() {
+        //画面更新を呼び出したい
+      });
+    });
     _checkFileExists();
-  }
-
-  //データベースに追加
-  void _addDataToDB() async {
-    await recordDAO.insertRecord(
-      widget.imgPath,
-      _getDateInt(),
-      _getTimeInt(),
-      widget.foodName,
-    );
-  }
-
-  // 現在の日付、時刻をintで取得
-  int _getDateInt() {
-    return now.year * 10000 + now.month * 100 + now.day;
-  }
-
-  int _getTimeInt() {
-    return now.hour * 10000 + now.minute * 100 + now.second;
   }
 
   Future<void> _rewardHandling(VoidCallback completion) async {
@@ -94,6 +79,26 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
       (time % 10000) ~/ 100,
       time % 100,
     );
+  }
+
+  //データベースに追加
+  void _addDataToDB(VoidCallback completion) async {
+    await recordDAO.insertRecord(
+      widget.imgPath,
+      _getDateInt(),
+      _getTimeInt(),
+      widget.foodName,
+    );
+    completion();
+  }
+
+  // 現在の日付、時刻をintで取得
+  int _getDateInt() {
+    return now.year * 10000 + now.month * 100 + now.day;
+  }
+
+  int _getTimeInt() {
+    return now.hour * 10000 + now.minute * 100 + now.second;
   }
 
   Future<void> _checkFileExists() async {

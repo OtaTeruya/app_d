@@ -1,9 +1,6 @@
-import 'package:app_d/capturePage/view/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import 'characterPage/view/character_page.dart';
-import 'historyPage/view/history_page.dart';
 import 'home/view/home.dart';
 
 final goRouter = GoRouter(
