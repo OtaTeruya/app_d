@@ -1,71 +1,74 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../home/view/home.dart';
 import 'capture_page_ui.dart';
 
 class CapturePage extends StatefulWidget {
-  const CapturePage({super.key});
+  final HomeCallback callback;
+  const CapturePage({super.key, required this.callback});
 
   @override
   State<CapturePage> createState() => _CapturePage();
 }
 
 class _CapturePage extends State<CapturePage> implements CapturePageCallback {
-  int uiNoZyoutai1 = 0;
-  String uiNoZyoutai2 = 'hoge';
-  CameraDescription? camera;
+  CapturePageScreen focusedScreen = CapturePageScreen.camera;
+  String imgPath = "";
+  String foodName = "";
 
   @override
-  void initState() {
-    super.initState();
-    setCamera();
+  void moveToHistoryPage() {
+    widget.callback.moveToHistoryPage();
   }
 
   @override
-  void moveToHomePage(BuildContext context) {
-    context.go('/homePage');
+  void moveToCharacterPage() {
+    widget.callback.moveToCharacterPage();
   }
 
   @override
-  void moveToHistoryPage(BuildContext context) {
-    context.go('/historyPage');
-  }
-
-  @override
-  void setCamera() async {
-    //カメラの設定
-    // デバイスで使用可能なカメラのリストを取得
-    final cameras = await availableCameras();
-    if (cameras.isEmpty) {
-      setState(() {
-        camera = null;
-      });
-      return;
-    }
-    // 利用可能なカメラのリストから特定のカメラを取得
-    final firstCamera = cameras.first;
-    // 取得できているか確認
-    print(firstCamera);
+  void moveToCameraScreen() {
     setState(() {
-      camera = firstCamera;
+      focusedScreen = CapturePageScreen.camera;
+    });
+  }
+
+  @override
+  void moveToCheckScreen(String imgPath) {
+    setState(() {
+      this.imgPath = imgPath;
+      focusedScreen = CapturePageScreen.check;
+    });
+  }
+
+  @override
+  void moveToResultScreen(String imgPath, String foodName) {
+    setState(() {
+      this.imgPath = imgPath;
+      this.foodName = foodName;
+      focusedScreen = CapturePageScreen.result;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return CapturePageUI(
-      // uiState: CapturePageUIState(
-      //   isCurrentLocation: isCurrentLocation,
-      // ),
+      uiState: CapturePageUIState(
+          focusedScreen: focusedScreen,
+          imgPath: imgPath,
+          foodName: foodName
+      ),
       callback: this,
-      camera: camera,
     );
   }
 }
 
 abstract class CapturePageCallback {
-  void moveToHomePage(BuildContext context);
-  void moveToHistoryPage(BuildContext context);
-  void setCamera();
+  void moveToHistoryPage();
+  void moveToCharacterPage();
+  void moveToCameraScreen();
+  void moveToCheckScreen(String imgPath);
+  void moveToResultScreen(String imgPath, String foodName);
 }
+
+enum CapturePageScreen { camera, check, result }

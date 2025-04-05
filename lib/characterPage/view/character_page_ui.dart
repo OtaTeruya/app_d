@@ -4,7 +4,6 @@ import 'package:app_d/characterPage/view/components/character_list.dart';
 import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 import 'character_page.dart';
 

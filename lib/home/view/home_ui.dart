@@ -4,20 +4,14 @@ import 'package:gap/gap.dart';
 import '../../capturePage/view/capture_page.dart';
 import '../../characterPage/view/character_page.dart';
 import '../../historyPage/view/history_page.dart';
-import 'home_page.dart';
+import 'home.dart';
 
-class HomePageUI extends StatefulWidget {
-  final HomePageDataState uiState;
-  final HomePageCallback callback;
-
-  const HomePageUI({super.key, required this.uiState, required this.callback});
-
-  @override
-  HomePageUIState createState() => HomePageUIState();
-}
-
-class HomePageUIState extends State<HomePageUI> {
+class HomeUI extends StatelessWidget {
+  final HomeUIState uiState;
+  final HomeCallback callback;
   final tabBarHeight = 52.0;
+
+  const HomeUI({super.key, required this.uiState, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -27,12 +21,12 @@ class HomePageUIState extends State<HomePageUI> {
               children: [
                 Container(
                   padding: EdgeInsets.only(
-                      bottom: widget.uiState.isBottomBarTranslucent ? 0 : tabBarHeight
+                      bottom: uiState.isBottomBarTranslucent ? 0 : tabBarHeight
                   ),
                   child: IndexedStack(
-                    index: widget.uiState.focusedPageIndex,
+                    index: uiState.focusedPageIndex,
                     children: [
-                      CapturePage(),
+                      CapturePage(callback: callback),
                       HistoryPage(),
                       CharacterPage(),
                     ],
@@ -54,22 +48,22 @@ class HomePageUIState extends State<HomePageUI> {
                         child: Row(
                           children: [
                             _tabButton(
-                                widget.callback.moveToCapturePage,
-                                widget.callback.isFocused(AppPage.capture),
+                                callback.moveToCapturePage,
+                                callback.isFocused(AppPage.capture),
                                 "images/icon_capture_focused.png",
                                 "images/icon_capture_unfocused.png",
                                 "撮影"
                             ),
                             _tabButton(
-                                widget.callback.moveToHistoryPage,
-                                widget.callback.isFocused(AppPage.history),
+                                callback.moveToHistoryPage,
+                                callback.isFocused(AppPage.history),
                                 "images/icon_calendar_focused.png",
                                 "images/icon_calendar_unfocused.png",
-                                "記録"
+                                "日記"
                             ),
                             _tabButton(
-                                widget.callback.moveToCharacterPage,
-                                widget.callback.isFocused(AppPage.character),
+                                callback.moveToCharacterPage,
+                                callback.isFocused(AppPage.character),
                                 "images/icon_character_focused.png",
                                 "images/icon_character_unfocused.png",
                                 "育成"
@@ -123,9 +117,9 @@ class HomePageUIState extends State<HomePageUI> {
   }
 }
 
-class HomePageDataState {
+class HomeUIState {
   final int focusedPageIndex;
   final bool isBottomBarTranslucent;
 
-  HomePageDataState({required this.focusedPageIndex, required this.isBottomBarTranslucent});
+  HomeUIState({required this.focusedPageIndex, required this.isBottomBarTranslucent});
 }

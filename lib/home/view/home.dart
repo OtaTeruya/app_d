@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-import 'home_page_ui.dart';
+import 'home_ui.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class Home extends StatefulWidget {
+  const Home({super.key});
 
   @override
-  State<HomePage> createState() => _HomePage();
+  State<Home> createState() => _Home();
 }
 
-class _HomePage extends State<HomePage> implements HomePageCallback {
+class _Home extends State<Home> implements HomeCallback {
   int focusedPageIndex = AppPage.values.indexOf(AppPage.history);
   bool isBottomBarTranslucent = false;
 
@@ -41,17 +41,17 @@ class _HomePage extends State<HomePage> implements HomePageCallback {
 
   @override
   Widget build(BuildContext context) {
-    return HomePageUI(
-      uiState: HomePageDataState(
+    return HomeUI(
+      uiState: HomeUIState(
           focusedPageIndex: focusedPageIndex,
           isBottomBarTranslucent: isBottomBarTranslucent
       ),
-      callback: this,
+      callback: this,//赤線が引かれているが問題ない
     );
   }
 }
 
-abstract class HomePageCallback {
+abstract class HomeCallback {
   void moveToCapturePage();
   void moveToHistoryPage();
   void moveToCharacterPage();

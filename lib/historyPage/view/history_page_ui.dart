@@ -2,7 +2,6 @@ import 'package:app_d/database/record_dao.dart';
 import 'package:app_d/historyPage/view/widgets/calendar.dart';
 import 'package:app_d/historyPage/view/widgets/photo_list.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import 'history_page.dart';
 
@@ -75,10 +74,6 @@ class HistoryPageUI extends StatelessWidget {
                           List<String> photoPaths = snapshot.data?[0] ?? [];
                           List<String> photoTimes = snapshot.data?[1] ?? [];
                           List<String> photoTitles = snapshot.data?[2] ?? [];
-
-                          print("photoPaths: $photoPaths\n");
-                          print("photoTimes: $photoTimes\n");
-                          print("photoTitles: $photoTitles\n");
 
                           return Column(
                             children: [
