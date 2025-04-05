@@ -21,15 +21,6 @@ class CharacterPageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('モンスター育成'),
-        leading: BackButton(
-          onPressed: () {
-            context.go('/homePage');
-          },
-        ),
-      ),
       body: Center(
         child: Stack(
           children: [

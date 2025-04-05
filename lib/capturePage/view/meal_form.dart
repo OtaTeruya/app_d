@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:app_d/capturePage/component/reward_dialog.dart';
 import 'package:app_d/characterPage/utils/food_manager.dart';
-import 'package:app_d/custom_app_bar.dart';
 import 'package:app_d/database/record_dao.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -122,7 +121,6 @@ class _MealFormState extends State<MealForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '食事の撮影'),
       body: SingleChildScrollView(
         child: Center(
           child: Column(

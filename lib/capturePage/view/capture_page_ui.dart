@@ -3,7 +3,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../custom_app_bar.dart';
 import 'capture_page.dart';
 
 class CapturePageUI extends StatelessWidget {
@@ -27,7 +26,6 @@ class CapturePageUI extends StatelessWidget {
     } else {
       //カメラが存在しない場合
       return Scaffold(
-        appBar: CustomAppBar(title: '食事の撮影'),
         body: Center(
           child: Column(
             //カメラが存在しないことを表示

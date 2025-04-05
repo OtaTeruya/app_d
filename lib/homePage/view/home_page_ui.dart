@@ -22,63 +22,65 @@ class HomePageUIState extends State<HomePageUI> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  bottom: widget.uiState.isBottomBarTranslucent ? 0 : tabBarHeight
-              ),
-              child: IndexedStack(
-                index: widget.uiState.focusedPageIndex,
-                children: [
-                  CapturePage(),
-                  HistoryPage(),
-                  CharacterPage(),
-                ],
-              ),
-            ),
-            Column(
+        body: SafeArea(
+            child: Stack(
               children: [
-                Spacer(),
                 Container(
-                    height: tabBarHeight,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
+                  padding: EdgeInsets.only(
+                      bottom: widget.uiState.isBottomBarTranslucent ? 0 : tabBarHeight
+                  ),
+                  child: IndexedStack(
+                    index: widget.uiState.focusedPageIndex,
+                    children: [
+                      CapturePage(),
+                      HistoryPage(),
+                      CharacterPage(),
+                    ],
+                  ),
+                ),
+                Column(
+                  children: [
+                    Spacer(),
+                    Container(
+                        height: tabBarHeight,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    child: Row(
-                      children: [
-                        _tabButton(
-                            widget.callback.moveToCapturePage,
-                            widget.callback.isFocused(AppPage.capture),
-                            "images/icon_capture_focused.png",
-                            "images/icon_capture_unfocused.png",
-                            "撮影"
-                        ),
-                        _tabButton(
-                            widget.callback.moveToHistoryPage,
-                            widget.callback.isFocused(AppPage.history),
-                            "images/icon_calendar_focused.png",
-                            "images/icon_calendar_unfocused.png",
-                            "記録"
-                        ),
-                        _tabButton(
-                            widget.callback.moveToCharacterPage,
-                            widget.callback.isFocused(AppPage.character),
-                            "images/icon_character_focused.png",
-                            "images/icon_character_unfocused.png",
-                            "育成"
-                        ),
-                      ],
+                        child: Row(
+                          children: [
+                            _tabButton(
+                                widget.callback.moveToCapturePage,
+                                widget.callback.isFocused(AppPage.capture),
+                                "images/icon_capture_focused.png",
+                                "images/icon_capture_unfocused.png",
+                                "撮影"
+                            ),
+                            _tabButton(
+                                widget.callback.moveToHistoryPage,
+                                widget.callback.isFocused(AppPage.history),
+                                "images/icon_calendar_focused.png",
+                                "images/icon_calendar_unfocused.png",
+                                "記録"
+                            ),
+                            _tabButton(
+                                widget.callback.moveToCharacterPage,
+                                widget.callback.isFocused(AppPage.character),
+                                "images/icon_character_focused.png",
+                                "images/icon_character_unfocused.png",
+                                "育成"
+                            ),
+                          ],
+                        )
                     )
+                  ],
                 )
               ],
             )
-          ],
         )
     );
   }

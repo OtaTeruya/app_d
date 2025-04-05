@@ -53,15 +53,6 @@ class HistoryPageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('日記'),
-        leading: BackButton(
-          onPressed: () {
-            context.go('/homePage');
-          },
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1),
         child: ListView(

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:app_d/capturePage/component/judge_food.dart';
-import 'package:app_d/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -60,7 +59,6 @@ class _CaptureResultState extends State<CaptureResult> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(title: '食事の撮影'),
       body:
           geminiSuccess
               ? SingleChildScrollView(
