@@ -16,6 +16,10 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   String imgPath = "";
   String foodName = "";
 
+  void _setIsCameraUsing(bool value) {
+    widget.callback.setIsCameraUsing(value);
+  }
+
   @override
   void moveToHistoryPage() {
     widget.callback.moveToHistoryPage();
@@ -28,6 +32,7 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
 
   @override
   void moveToCameraScreen() {
+    _setIsCameraUsing(true);
     setState(() {
       focusedScreen = CapturePageScreen.camera;
     });
@@ -35,6 +40,7 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
 
   @override
   void moveToCheckScreen(String imgPath) {
+    _setIsCameraUsing(false);
     setState(() {
       this.imgPath = imgPath;
       focusedScreen = CapturePageScreen.check;
@@ -43,6 +49,7 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
 
   @override
   void moveToResultScreen(String imgPath, String foodName) {
+    _setIsCameraUsing(false);
     setState(() {
       this.imgPath = imgPath;
       this.foodName = foodName;

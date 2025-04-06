@@ -14,7 +14,7 @@ class Home extends StatefulWidget {
 
 class _Home extends State<Home> implements HomeCallback {
   int focusedPageIndex = AppPage.values.indexOf(AppPage.history);
-  bool isBottomBarTranslucent = false;
+  bool isCameraUsing = true;
   late List<StatefulWidget> pages;
 
   @override
@@ -48,6 +48,13 @@ class _Home extends State<Home> implements HomeCallback {
   bool isFocused(AppPage appPage) {
     return focusedPageIndex == AppPage.values.indexOf(appPage);
   }
+  
+  @override
+  void setIsCameraUsing(bool value) {
+    setState(() {
+      isCameraUsing = value;
+    });
+  } 
 
   @override
   void updateHistoryPage() {
@@ -70,7 +77,7 @@ class _Home extends State<Home> implements HomeCallback {
     return HomeUI(
       uiState: HomeUIState(
           focusedPageIndex: focusedPageIndex,
-          isBottomBarTranslucent: isBottomBarTranslucent,
+          isBottomBarTranslucent: isCameraUsing && isFocused(AppPage.capture),
           pages: pages
       ),
       callback: this,//赤線が引かれているが問題ない
@@ -83,6 +90,7 @@ abstract class HomeCallback {
   void moveToHistoryPage();
   void moveToCharacterPage();
   bool isFocused(AppPage appPage);
+  void setIsCameraUsing(bool value);
   void updateHistoryPage();
   void updateCharacterPage();
 }

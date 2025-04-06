@@ -28,7 +28,7 @@ class CameraScreenUI extends StatelessWidget {
         padding:
         uiState.isLandscape
             ? const EdgeInsets.only(bottom: 0)
-            : const EdgeInsets.only(bottom: 20),
+            : const EdgeInsets.only(bottom: 8 + 52),
         child: SizedBox(
           width: 70,
           height: 70,
