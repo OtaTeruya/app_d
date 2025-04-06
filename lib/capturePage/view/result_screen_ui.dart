@@ -75,7 +75,7 @@ class ResultScreenUI extends StatelessWidget {
                     child: Text('もう一枚撮る'),
                   ),
                   TextButton(
-                    onPressed: callback.moveToHistoryPage,
+                    onPressed: () { callback.moveToHistoryPageWithDate(uiState.now); },
                     child: Text('日記を見る'),
                   ),
                 ],

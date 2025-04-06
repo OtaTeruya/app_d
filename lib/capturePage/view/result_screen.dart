@@ -26,28 +26,31 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
   @override
   void initState() {
     super.initState();
-    _rewardHandling(() {
+    _rewardHandling((bool isFoodGot) {
+      if (isFoodGot) {
+        widget.callback.updateCharacterPageByGettingFood();
+      }
       _addDataToDB(() {
-        //画面更新を呼び出したい
+        widget.callback.updateHistoryPageByAddingData(now);
       });
     });
     _checkFileExists();
   }
 
-  Future<void> _rewardHandling(VoidCallback completion) async {
+  Future<void> _rewardHandling(Function(bool) completion) async {
     DateTime? latestRecordTime = await _getLatestRecord();
     if (latestRecordTime != null) {
       // 前回のデータの時間と今回のデータの時間の差を計算
       Duration diff = now.difference(latestRecordTime);
       // 2時間以上経過していない場合は報酬を与えない
       if (diff.inHours < 2) {
-        completion();
+        completion(false);
         return;
       }
     }
 
     if (!mounted) {//上の処理を行なっている間に破棄されていたら
-      completion();
+      completion(false);
       return;
     }
 
@@ -60,7 +63,7 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
         return RewardDialog(moveToCharacterPage: widget.callback.moveToCharacterPage);
       },
     );
-    completion();
+    completion(true);
   }
 
   // 前回のデータの時間を取得
@@ -114,8 +117,8 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
   }
 
   @override
-  void moveToHistoryPage() {
-    widget.callback.moveToHistoryPage();
+  void moveToHistoryPageWithDate(DateTime date) {
+    widget.callback.moveToHistoryPageWithDate(date);
   }
 
   @override
@@ -134,5 +137,5 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
 
 abstract class ResultScreenCallback {
   void moveToCameraScreen();
-  void moveToHistoryPage();
+  void moveToHistoryPageWithDate(DateTime date);
 }

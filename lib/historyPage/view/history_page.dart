@@ -1,17 +1,19 @@
+import 'package:app_d/home/view/home.dart';
 import 'package:flutter/material.dart';
 
 import '../../database/record_dao.dart';
 import 'history_page_ui.dart';
 
 class HistoryPage extends StatefulWidget {
-  const HistoryPage({super.key});
+  final DateTime selectedDate;
+  final HomeCallback callback;
+  const HistoryPage({super.key, required this.selectedDate, required this.callback});
 
   @override
   State<HistoryPage> createState() => _HistoryPage();
 }
 
 class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
-  DateTime selectedDate = DateTime.now();
   List<String>? photoPaths;
   List<String>? photoTimes;
   List<String>? photoTitles;
@@ -19,7 +21,28 @@ class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
   @override
   void initState() {
     super.initState();
-    selectDate(selectedDate);
+    _onSelectedDateUpdated();
+  }
+
+  @override
+  void didUpdateWidget(covariant HistoryPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.selectedDate != widget.selectedDate) {
+      _onSelectedDateUpdated();
+    }
+  }
+
+  Future<void> _onSelectedDateUpdated() async {
+    int intDate = convertDateTimeToInt(widget.selectedDate);
+    List<String> tmpPhotoPaths = await pickPhotoPaths(intDate);
+    List<String> tmpPhotoTimes = await pickPhotoTimes(intDate);
+    List<String> tmpPhotoTitles = await pickPhotoTitles(intDate);
+
+    setState(() {
+      photoPaths = tmpPhotoPaths;
+      photoTimes = tmpPhotoTimes;
+      photoTitles = tmpPhotoTitles;
+    });
   }
 
   int convertDateTimeToInt(DateTime dateTime) {
@@ -61,24 +84,14 @@ class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
 
   @override
   Future<void> selectDate(DateTime date) async {
-    int intDate = convertDateTimeToInt(date);
-    List<String> tmpPhotoPaths = await pickPhotoPaths(intDate);
-    List<String> tmpPhotoTimes = await pickPhotoTimes(intDate);
-    List<String> tmpPhotoTitles = await pickPhotoTitles(intDate);
-
-    setState(() {
-      selectedDate = date;
-      photoPaths = tmpPhotoPaths;
-      photoTimes = tmpPhotoTimes;
-      photoTitles = tmpPhotoTitles;
-    });
+    widget.callback.setSelectedDate(date);
   }
 
   @override
   Widget build(BuildContext context) {
     return HistoryPageUI(
         uiState: HistoryPageUIState(
-            selectedDate: selectedDate,
+            selectedDate: widget.selectedDate,
             photoPaths: photoPaths,
             photoTimes: photoTimes,
             photoTitles: photoTitles

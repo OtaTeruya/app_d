@@ -27,8 +27,8 @@ class HomeUI extends StatelessWidget {
                     index: uiState.focusedPageIndex,
                     children: [
                       CapturePage(callback: callback),
-                      HistoryPage(),
-                      CharacterPage(),
+                      HistoryPage(selectedDate: uiState.selectedDate, callback: callback),
+                      CharacterPage(foodCount: uiState.foodCount, callback: callback),
                     ],
                   ),
                 ),
@@ -120,6 +120,13 @@ class HomeUI extends StatelessWidget {
 class HomeUIState {
   final int focusedPageIndex;
   final bool isBottomBarTranslucent;
+  final DateTime selectedDate;
+  final int? foodCount;
 
-  HomeUIState({required this.focusedPageIndex, required this.isBottomBarTranslucent});
+  HomeUIState({
+    required this.focusedPageIndex,
+    required this.isBottomBarTranslucent,
+    required this.selectedDate,
+    required this.foodCount
+  });
 }
