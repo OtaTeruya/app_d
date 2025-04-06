@@ -1,6 +1,8 @@
+import 'package:app_d/capturePage/view/capture_page.dart';
+import 'package:app_d/characterPage/view/character_page.dart';
+import 'package:app_d/historyPage/view/history_page.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../../characterPage/utils/food_manager.dart';
 import 'home_ui.dart';
 
 class Home extends StatefulWidget {
@@ -13,24 +15,12 @@ class Home extends StatefulWidget {
 class _Home extends State<Home> implements HomeCallback {
   int focusedPageIndex = AppPage.values.indexOf(AppPage.history);
   bool isBottomBarTranslucent = false;
-
-  //HistoryPageの再描画を制御するために知っておく必要のある変数
-  DateTime selectedDate = DateTime.now();
-
-  //CharacterPageの再描画を制御するために知っておく必要のある変数
-  int? foodCount;
+  late List<StatefulWidget> pages;
 
   @override
   void initState() {
     super.initState();
-    _loadFoodCount();
-  }
-
-  Future<void> _loadFoodCount() async {
-    final cnt = await FoodManager().loadFoodCount();
-    setState(() {
-      foodCount = cnt;
-    });
+    pages = [CapturePage(callback: this), HistoryPage(), CharacterPage()];
   }
 
   @override
@@ -48,14 +38,6 @@ class _Home extends State<Home> implements HomeCallback {
   }
 
   @override
-  void moveToHistoryPageWithDate(DateTime date) {
-    setState(() {
-      selectedDate = date;
-      focusedPageIndex = AppPage.values.indexOf(AppPage.history);
-    });
-  }
-
-  @override
   void moveToCharacterPage() {
     setState(() {
       focusedPageIndex = AppPage.values.indexOf(AppPage.character);
@@ -68,36 +50,18 @@ class _Home extends State<Home> implements HomeCallback {
   }
 
   @override
-  void setSelectedDate(DateTime date) {
+  void updateHistoryPage() {
     setState(() {
-      selectedDate = date;
+      //keyを指定して別物とすることで、再描画を走らせる
+      pages[1] = HistoryPage(key: UniqueKey());
     });
   }
 
   @override
-  void updateHistoryPageByAddingData(DateTime date) {
-    if (selectedDate.year == date.year && selectedDate.month == date.month && selectedDate.day == date.day) {
-      setSelectedDate(date);//同じ日付が選ばれていれば、データ追加を反映するために、UIの再描画を呼び出す
-    }
-  }
-
-  @override
-  void updateCharacterPageByGettingFood() {
-    if (foodCount == null) {
-      return;
-    }
+  void updateCharacterPage() {
     setState(() {
-      foodCount = foodCount! + 1;
-    });
-  }
-
-  @override
-  void updateCharacterPageByEatingFood() {
-    if (foodCount == null) {
-      return;
-    }
-    setState(() {
-      foodCount = foodCount! - 1;
+      //keyを指定して別物とすることで、再描画を走らせる
+      pages[2] = CharacterPage(key: UniqueKey());
     });
   }
 
@@ -107,8 +71,7 @@ class _Home extends State<Home> implements HomeCallback {
       uiState: HomeUIState(
           focusedPageIndex: focusedPageIndex,
           isBottomBarTranslucent: isBottomBarTranslucent,
-          selectedDate: selectedDate,
-          foodCount: foodCount
+          pages: pages
       ),
       callback: this,//赤線が引かれているが問題ない
     );
@@ -118,13 +81,10 @@ class _Home extends State<Home> implements HomeCallback {
 abstract class HomeCallback {
   void moveToCapturePage();
   void moveToHistoryPage();
-  void moveToHistoryPageWithDate(DateTime date);
   void moveToCharacterPage();
   bool isFocused(AppPage appPage);
-  void setSelectedDate(DateTime date);
-  void updateHistoryPageByAddingData(DateTime date);
-  void updateCharacterPageByGettingFood();
-  void updateCharacterPageByEatingFood();
+  void updateHistoryPage();
+  void updateCharacterPage();
 }
 
 enum AppPage { capture, history, character }

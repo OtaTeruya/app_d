@@ -17,8 +17,8 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   String foodName = "";
 
   @override
-  void moveToHistoryPageWithDate(DateTime date) {
-    widget.callback.moveToHistoryPageWithDate(date);
+  void moveToHistoryPage() {
+    widget.callback.moveToHistoryPage();
   }
 
   @override
@@ -51,13 +51,13 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   }
 
   @override
-  void updateCharacterPageByGettingFood() {
-    widget.callback.updateCharacterPageByGettingFood();
+  void updateHistoryPage() {
+    widget.callback.updateHistoryPage();
   }
 
   @override
-  void updateHistoryPageByAddingData(DateTime date) {
-    widget.callback.updateHistoryPageByAddingData(date);
+  void updateCharacterPage() {
+    widget.callback.updateCharacterPage();
   }
 
   @override
@@ -74,13 +74,13 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
 }
 
 abstract class CapturePageCallback {
-  void moveToHistoryPageWithDate(DateTime date);
+  void moveToHistoryPage();
   void moveToCharacterPage();
   void moveToCameraScreen();
   void moveToCheckScreen(String imgPath);
   void moveToResultScreen(String imgPath, String foodName);
-  void updateCharacterPageByGettingFood();
-  void updateHistoryPageByAddingData(DateTime date);
+  void updateHistoryPage();
+  void updateCharacterPage();
 }
 
 enum CapturePageScreen { camera, check, result }

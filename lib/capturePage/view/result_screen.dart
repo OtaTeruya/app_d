@@ -28,10 +28,10 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
     super.initState();
     _rewardHandling((bool isFoodGot) {
       if (isFoodGot) {
-        widget.callback.updateCharacterPageByGettingFood();
+        widget.callback.updateCharacterPage();
       }
       _addDataToDB(() {
-        widget.callback.updateHistoryPageByAddingData(now);
+        widget.callback.updateHistoryPage();
       });
     });
     _checkFileExists();
@@ -117,8 +117,8 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
   }
 
   @override
-  void moveToHistoryPageWithDate(DateTime date) {
-    widget.callback.moveToHistoryPageWithDate(date);
+  void moveToHistoryPage() {
+    widget.callback.moveToHistoryPage();
   }
 
   @override
@@ -137,5 +137,5 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
 
 abstract class ResultScreenCallback {
   void moveToCameraScreen();
-  void moveToHistoryPageWithDate(DateTime date);
+  void moveToHistoryPage();
 }

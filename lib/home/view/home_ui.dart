@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
-import '../../capturePage/view/capture_page.dart';
-import '../../characterPage/view/character_page.dart';
-import '../../historyPage/view/history_page.dart';
 import 'home.dart';
 
 class HomeUI extends StatelessWidget {
@@ -25,11 +22,7 @@ class HomeUI extends StatelessWidget {
                   ),
                   child: IndexedStack(
                     index: uiState.focusedPageIndex,
-                    children: [
-                      CapturePage(callback: callback),
-                      HistoryPage(selectedDate: uiState.selectedDate, callback: callback),
-                      CharacterPage(foodCount: uiState.foodCount, callback: callback),
-                    ],
+                    children: uiState.pages,
                   ),
                 ),
                 Column(
@@ -120,13 +113,11 @@ class HomeUI extends StatelessWidget {
 class HomeUIState {
   final int focusedPageIndex;
   final bool isBottomBarTranslucent;
-  final DateTime selectedDate;
-  final int? foodCount;
+  final List<StatefulWidget> pages;
 
   HomeUIState({
     required this.focusedPageIndex,
     required this.isBottomBarTranslucent,
-    required this.selectedDate,
-    required this.foodCount
+    required this.pages
   });
 }
