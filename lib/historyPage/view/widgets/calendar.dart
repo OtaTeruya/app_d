@@ -16,6 +16,24 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TableCalendar(
+      headerStyle: HeaderStyle(
+        formatButtonVisible: false,
+        titleCentered: true
+      ),
+      calendarStyle: CalendarStyle(
+        cellMargin: EdgeInsets.zero,
+        cellPadding: EdgeInsets.all(4),
+        todayDecoration: BoxDecoration(
+          color: Color(0xFF7F7F7F),
+          shape: BoxShape.circle,
+        ),
+        selectedDecoration: BoxDecoration(
+          color: Color(0xFF547F54),
+          shape: BoxShape.circle,
+        ),
+      ),
+      rowHeight: 42,
+      daysOfWeekHeight: 28,
       firstDay: DateTime.utc(2024, 1, 1),
       lastDay: DateTime.utc(2050, 1, 1),
       focusedDay: selectedDate,
