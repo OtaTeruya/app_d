@@ -55,7 +55,7 @@ class _CharacterPage extends State<CharacterPage> implements CharacterPageCallba
     FoodManager().subtractSavedFoodCount();
     CharacterManager().addSavedCharacterLevel(chosenCharacter!.id);
     setState(() {
-      foodCount = foodCount! + 1;
+      foodCount = foodCount! - 1;
       chosenCharacterLevel = chosenCharacterLevel! + 1;
     });
     return true;
