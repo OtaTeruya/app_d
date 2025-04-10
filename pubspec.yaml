@@ -116,7 +116,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/character1.png"
-  adaptive_icon_background: "#d0e2be"
-  adaptive_icon_foreground: "images/character1.png"
+  image_path: "images/icon.png"
+  adaptive_icon_background: "#547f54"
+  adaptive_icon_foreground: "images/icon.png"
   remove_alpha_ios: true
