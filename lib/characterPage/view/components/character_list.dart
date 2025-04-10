@@ -44,7 +44,7 @@ class _CharacterList extends State<CharacterList>
   @override
   Widget build(BuildContext context) {
     if (characters == null) {
-      return Center(child: CircularProgressIndicator());
+      return SizedBox.shrink();
     }
 
     return CharacterListUI(
