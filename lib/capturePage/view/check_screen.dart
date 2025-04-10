@@ -67,7 +67,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
 
   @override
   void recapture() {
-    File(widget.imgPath).delete();
+    ImageManager().deleteImage(widget.imgPath);
     widget.callback.moveToCameraScreen();
   }
 

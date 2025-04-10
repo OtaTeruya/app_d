@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../capturePage/utils/image_manager.dart';
 import '../../database/record_dao.dart';
 import 'history_page_ui.dart';
 
@@ -11,10 +12,20 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
+  //calendar用
   DateTime selectedDate = DateTime.now();
+
+  //photo_list用
   List<String>? photoPaths;
   List<String>? photoTimes;
   List<String>? photoTitles;
+
+  //popup用
+  bool isPopupVisible = false;
+  String foodNameOnPopup = "";
+  String imgPathOnPopup = "";
+
+  bool isProcessing = false;
 
   @override
   void initState() {
@@ -75,13 +86,57 @@ class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
   }
 
   @override
+  void openPopup(String foodName, String imgPath) {
+    setState(() {
+      isPopupVisible = true;
+      foodNameOnPopup = foodName;
+      imgPathOnPopup = imgPath;
+    });
+  }
+
+  @override
+  Future<void> deleteImageOnPopup() async {
+    if (isProcessing) {
+      return;
+    }
+    isProcessing = true;
+
+    await RecordDAO().deleteRecordByPath(imgPathOnPopup);
+    ImageManager().deleteImage(imgPathOnPopup);
+    await selectDate(selectedDate);
+    setState(() {
+      isPopupVisible = false;
+    });
+
+    isProcessing = false;
+  }
+
+  @override
+  Future<void> closePopup(int rotationAngle) async {
+    if (isProcessing) {
+      return;
+    }
+    isProcessing = true;
+
+    await ImageManager().saveImageIfNecessary(imgPathOnPopup, rotationAngle);
+    setState(() {
+      isPopupVisible = false;
+    });
+
+    isProcessing = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return HistoryPageUI(
         uiState: HistoryPageUIState(
             selectedDate: selectedDate,
             photoPaths: photoPaths,
             photoTimes: photoTimes,
-            photoTitles: photoTitles
+            photoTitles: photoTitles,
+            isPopupVisible: isPopupVisible,
+            foodNameOnPopup: foodNameOnPopup,
+            imgPathOnPopup: imgPathOnPopup
         ),
         callback: this
     );
@@ -90,4 +145,7 @@ class _HistoryPage extends State<HistoryPage> implements HistoryPageCallback {
 
 abstract class HistoryPageCallback {
   Future<void> selectDate(DateTime date);
+  void openPopup(String foodName, String imgPath);
+  Future<void> deleteImageOnPopup();
+  Future<void> closePopup(int rotationAngle);
 }

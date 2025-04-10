@@ -48,7 +48,7 @@ class ImageWithRotation extends StatelessWidget {
         if (deleteImage != null) ...[
           Positioned(
             bottom: 0,
-            right: 8,
+            left: 8,
             child: Opacity(
               opacity: 0.3,
               child: IconButton(

@@ -48,4 +48,8 @@ class ImageManager {
     final image = file.readAsBytesSync();
     return Image.memory(image, fit: BoxFit.contain);
   }
+
+  void deleteImage(String imgPath) {
+    File(imgPath).delete();
+  }
 }

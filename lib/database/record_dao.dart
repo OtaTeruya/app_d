@@ -32,4 +32,13 @@ class RecordDAO {
       orderBy: 'time ASC',
     );
   }
+
+  Future<int> deleteRecordByPath(String path) async {
+    final db = await DatabaseHelper.instance.database;
+    return await db.delete(
+      'records',
+      where: 'path = ?',
+      whereArgs: [path],
+    );
+  }
 }
