@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CharacterManager {
   final List<_CharacterInfo> _characterInfos = [
-    _CharacterInfo(id: 0, name: "みずいろ", imagePath: "images/character1.png", maxLevel: 10, size: 80, minDist: 60, maxDist: 180),
-    _CharacterInfo(id: 1, name: "むらさき", imagePath: "images/character2.png", maxLevel: 30, size: 80, minDist: 60, maxDist: 180),
-    _CharacterInfo(id: 2, name: "あお", imagePath: "images/character3.png", maxLevel: 30, size: 80, minDist: 20, maxDist: 100),
-    _CharacterInfo(id: 3, name: "おれんじ", imagePath: "images/character4.png", maxLevel: 50, size: 80, minDist: 120, maxDist: 240),
-    _CharacterInfo(id: 4, name: "みどり", imagePath: "images/character5.png", maxLevel: 50, size: 60, minDist: 60, maxDist: 180),
+    _CharacterInfo(id: 0, name: "ミントロル", imagePath: "images/character1.png", maxLevel: 10, size: 80, minDist: 60, maxDist: 180),
+    _CharacterInfo(id: 1, name: "ベリーニャ", imagePath: "images/character2.png", maxLevel: 30, size: 80, minDist: 60, maxDist: 180),
+    _CharacterInfo(id: 2, name: "ラムネン", imagePath: "images/character3.png", maxLevel: 30, size: 80, minDist: 20, maxDist: 100),
+    _CharacterInfo(id: 3, name: "トマトマ", imagePath: "images/character4.png", maxLevel: 50, size: 80, minDist: 120, maxDist: 240),
+    _CharacterInfo(id: 4, name: "バジルモン", imagePath: "images/character5.png", maxLevel: 50, size: 60, minDist: 60, maxDist: 180),
   ];
 
   Future<List<Character>> getCharacters() async {
