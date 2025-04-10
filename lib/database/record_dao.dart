@@ -16,13 +16,6 @@ class RecordDAO {
     });
   }
 
-  Future<Map<String, dynamic>?> getLatestRecord() async {
-    final db = await DatabaseHelper.instance.database;
-    final result = await db.query('records', orderBy: 'id DESC', limit: 1);
-
-    return result.isNotEmpty ? result.first : null;
-  }
-
   Future<List<Map<String, dynamic>>> getRecordsByDate(int date) async {
     final db = await DatabaseHelper.instance.database;
     return await db.query(

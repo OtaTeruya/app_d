@@ -38,15 +38,12 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
   }
 
   Future<void> _rewardHandling(Function(bool) completion) async {
-    DateTime? latestRecordTime = await _getLatestRecord();
-    if (latestRecordTime != null) {
-      // 前回のデータの時間と今回のデータの時間の差を計算
-      Duration diff = now.difference(latestRecordTime);
-      // 2時間以上経過していない場合は報酬を与えない
-      if (diff.inHours < 2) {
-        completion(false);
-        return;
-      }
+    // 報酬を与える処理
+    bool isFoodAdded = await FoodManager().addSavedFoodCount();
+
+    if (!isFoodAdded) {
+      completion(false);
+      return;
     }
 
     if (!mounted) {//上の処理を行なっている間に破棄されていたら
@@ -54,8 +51,6 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
       return;
     }
 
-    // 報酬を与える処理
-    FoodManager().addSavedFoodCount();
     showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -64,24 +59,6 @@ class _ResultScreenState extends State<ResultScreen> implements ResultScreenCall
       },
     );
     completion(true);
-  }
-
-  // 前回のデータの時間を取得
-  Future<DateTime?> _getLatestRecord() async {
-    var latestRecord = await recordDAO.getLatestRecord();
-    if (latestRecord == null) {
-      return null;
-    }
-    int date = latestRecord['date'];
-    int time = latestRecord['time'];
-    return DateTime(
-      date ~/ 10000,
-      (date % 10000) ~/ 100,
-      date % 100,
-      time ~/ 10000,
-      (time % 10000) ~/ 100,
-      time % 100,
-    );
   }
 
   //データベースに追加
