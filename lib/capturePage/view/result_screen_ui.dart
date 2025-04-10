@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:app_d/capturePage/utils/image_manager.dart';
 import 'package:app_d/capturePage/view/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -60,7 +59,7 @@ class ResultScreenUI extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ) // ローディング中
                       : uiState.fileExists == true
-                      ? Image.file(File(uiState.imgPath)) // ファイルが存在する場合
+                      ? ImageManager().getImage(uiState.imgPath) // ファイルが存在する場合
                       : const Center(
                     child: Text("データが存在しません"),
                   ), // ファイルが存在しない場合

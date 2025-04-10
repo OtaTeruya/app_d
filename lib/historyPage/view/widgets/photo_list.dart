@@ -1,6 +1,6 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+
+import '../../../capturePage/utils/image_manager.dart';
 
 class PhotoList extends StatelessWidget {
   final List<String>? photoTimes;
@@ -43,7 +43,7 @@ class PhotoList extends StatelessWidget {
                 ),
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32),
-                    child: Image.file(File(photoPaths![i]), fit: BoxFit.cover)
+                    child: ImageManager().getImage(photoPaths![i])
                 )
               ],
             )

@@ -4,6 +4,7 @@ import 'package:app_d/capturePage/utils/judge_food.dart';
 import 'package:app_d/capturePage/view/check_screen_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/image_manager.dart';
 import 'capture_page.dart';
 
 class CheckScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class CheckScreen extends StatefulWidget {
 class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallback {
   bool? fileExists;
   bool? isFood;
+  int rotationAngle = 0;
   String foodName = '';
   bool geminiSuccess = true;
 
@@ -57,13 +59,21 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
   }
 
   @override
+  void rotateImage() {
+    setState(() {
+      rotationAngle = rotationAngle + 90;
+    });
+  }
+
+  @override
   void recapture() {
     File(widget.imgPath).delete();
     widget.callback.moveToCameraScreen();
   }
 
   @override
-  void moveToResultScreen() {
+  Future<void> moveToResultScreen() async {
+    await ImageManager().saveImageIfNecessary(widget.imgPath, rotationAngle);
     widget.callback.moveToResultScreen(widget.imgPath, foodName);
   }
 
@@ -73,6 +83,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
         uiState: CheckScreenUIState(
             imgPath: widget.imgPath,
             fileExists: fileExists,
+            rotationAngle: rotationAngle,
             isFood: isFood,
             foodName: foodName,
             geminiSuccess: geminiSuccess
@@ -83,6 +94,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
 }
 
 abstract class CheckScreenCallback {
+  void rotateImage();
   void recapture();
-  void moveToResultScreen();
+  Future<void> moveToResultScreen();
 }

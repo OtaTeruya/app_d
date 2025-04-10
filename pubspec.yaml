@@ -48,6 +48,7 @@ dependencies:
   google_generative_ai: ^0.4.6
   flutter_dotenv: ^5.2.1
   animated_text_kit: ^4.2.3
+  image: ^4.5.4
 
 dev_dependencies:
   flutter_test:

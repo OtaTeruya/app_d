@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:app_d/capturePage/components/image_with_rotation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
@@ -56,16 +55,14 @@ class CheckScreenUI extends StatelessWidget {
               height: 320,
               child:
               uiState.fileExists == null
-                  ? const Center(
-                child: CircularProgressIndicator(),
-              ) // ローディング中
+                  ? const Center(child: CircularProgressIndicator(),) // ローディング中
                   : uiState.fileExists == true
-                  ? Image.file(
-                File(uiState.imgPath),
-              ) // ファイルが存在する場合
-                  : const Center(
-                child: Text("データが存在しません"),
-              ), // ファイルが存在しない場合
+                    ? ImageWithRotation(
+                    imgPath: uiState.imgPath,
+                    rotationAngle: uiState.rotationAngle,
+                    rotateImage: callback.rotateImage,
+                    deleteImage: null) // ファイルが存在する場合
+                    : const Center(child: Text("データが存在しません"),), // ファイルが存在しない場合
             ),
             Gap(20),
             uiState.fileExists == true
@@ -120,6 +117,7 @@ class CheckScreenUI extends StatelessWidget {
 class CheckScreenUIState {
   String imgPath;
   bool? fileExists;
+  int rotationAngle;
   bool? isFood;
   String foodName;
   bool geminiSuccess;
@@ -127,8 +125,9 @@ class CheckScreenUIState {
   CheckScreenUIState({
     required this.imgPath,
     required this.fileExists,
+    required this.rotationAngle,
     required this.isFood,
     required this.foodName,
-    required this.geminiSuccess
+    required this.geminiSuccess,
   });
 }
