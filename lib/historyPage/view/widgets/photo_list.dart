@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 
 import '../../../capturePage/utils/image_manager.dart';
 
@@ -46,13 +47,14 @@ class PhotoList extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 32),
+                        padding: EdgeInsets.symmetric(horizontal: 24),
                         child: ImageManager().getImage(photoPaths![i])
                     )
                   ],
                 )
             )
-          ]
+          ],
+          Gap(8)
         ],
       );
     }

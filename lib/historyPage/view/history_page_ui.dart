@@ -18,6 +18,7 @@ class HistoryPageUI extends StatelessWidget {
       body: Stack(
         children: [
           ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             children: [
               Calendar(selectedDate: uiState.selectedDate, callback: callback),
               Gap(16),
