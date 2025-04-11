@@ -4,7 +4,6 @@ import 'package:app_d/characterPage/view/components/character_list.dart';
 import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 import 'character_page.dart';
 
@@ -21,15 +20,6 @@ class CharacterPageUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text('モンスター育成'),
-        leading: BackButton(
-          onPressed: () {
-            context.go('/homePage');
-          },
-        ),
-      ),
       body: Center(
         child: Stack(
           children: [
@@ -66,13 +56,13 @@ class CharacterPageUI extends StatelessWidget {
                       },
                     ),
                   ),
-                  Gap(20),
+                  Gap(8),
                   CharacterProfile(
                     character: uiState.chosenCharacter,
                     characterLevel: uiState.chosenCharacterLevel,
                     onClick: () => callback.showCharacterListUI(),
                   ),
-                  Gap(40),
+                  Gap(8),
                 ],
               ),
             ),

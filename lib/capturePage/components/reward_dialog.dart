@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:go_router/go_router.dart';
 
 class RewardDialog extends StatelessWidget {
-  const RewardDialog({super.key, required this.nextPath});
-  final String nextPath;
+  final VoidCallback moveToCharacterPage;
+  const RewardDialog({super.key, required this.moveToCharacterPage});
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +26,14 @@ class RewardDialog extends StatelessWidget {
             GestureDetector(
               child: Text('いいえ', style: TextStyle(color: Colors.blue)),
               onTap: () {
-                context.go(nextPath);
-              },
+                Navigator.of(context).pop();
+                },
             ),
             GestureDetector(
               child: Text('様子を見に行く', style: TextStyle(color: Colors.blue)),
               onTap: () {
-                context.go('/characterPage');
+                Navigator.of(context).pop();
+                moveToCharacterPage();
               },
             ),
           ],

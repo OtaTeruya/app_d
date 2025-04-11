@@ -1,71 +1,107 @@
-import 'package:camera/camera.dart';
+import 'package:app_d/capturePage/utils/interstitial_ad_manager.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../home/view/home.dart';
 import 'capture_page_ui.dart';
 
 class CapturePage extends StatefulWidget {
-  const CapturePage({super.key});
+  final HomeCallback callback;
+  const CapturePage({super.key, required this.callback});
 
   @override
   State<CapturePage> createState() => _CapturePage();
 }
 
 class _CapturePage extends State<CapturePage> implements CapturePageCallback {
-  int uiNoZyoutai1 = 0;
-  String uiNoZyoutai2 = 'hoge';
-  CameraDescription? camera;
+  CapturePageScreen focusedScreen = CapturePageScreen.camera;
+  String imgPath = "";
+  String foodName = "";
+  InterstitialAdManager interstitialAdManager = InterstitialAdManager();
 
-  @override
-  void initState() {
-    super.initState();
-    setCamera();
+  void _setIsCameraUsing(bool value) {
+    widget.callback.setIsCameraUsing(value);
   }
 
   @override
-  void moveToHomePage(BuildContext context) {
-    context.go('/homePage');
+  void moveToHistoryPage() {
+    widget.callback.moveToHistoryPage();
   }
 
   @override
-  void moveToHistoryPage(BuildContext context) {
-    context.go('/historyPage');
+  void moveToCharacterPage() {
+    widget.callback.moveToCharacterPage();
   }
 
   @override
-  void setCamera() async {
-    //カメラの設定
-    // デバイスで使用可能なカメラのリストを取得
-    final cameras = await availableCameras();
-    if (cameras.isEmpty) {
-      setState(() {
-        camera = null;
-      });
-      return;
-    }
-    // 利用可能なカメラのリストから特定のカメラを取得
-    final firstCamera = cameras.first;
-    // 取得できているか確認
-    print(firstCamera);
+  void moveToCameraScreen() {
+    _setIsCameraUsing(true);
     setState(() {
-      camera = firstCamera;
+      focusedScreen = CapturePageScreen.camera;
     });
+  }
+
+  @override
+  void moveToCheckScreen(String imgPath) {
+    _setIsCameraUsing(false);
+    setState(() {
+      this.imgPath = imgPath;
+      focusedScreen = CapturePageScreen.check;
+    });
+  }
+
+  @override
+  void moveToResultScreen(String imgPath, String foodName) {
+    _setIsCameraUsing(false);
+    setState(() {
+      this.imgPath = imgPath;
+      this.foodName = foodName;
+      focusedScreen = CapturePageScreen.result;
+    });
+  }
+
+  @override
+  void updateHistoryPage() {
+    widget.callback.updateHistoryPage();
+  }
+
+  @override
+  void updateCharacterPage() {
+    widget.callback.updateCharacterPage();
+  }
+
+  @override
+  void loadAd() {
+    interstitialAdManager.loadAd();
+  }
+
+  @override
+  void showAd() {
+    interstitialAdManager.showAd();
   }
 
   @override
   Widget build(BuildContext context) {
     return CapturePageUI(
-      // uiState: CapturePageUIState(
-      //   isCurrentLocation: isCurrentLocation,
-      // ),
+      uiState: CapturePageUIState(
+          focusedScreen: focusedScreen,
+          imgPath: imgPath,
+          foodName: foodName
+      ),
       callback: this,
-      camera: camera,
     );
   }
 }
 
 abstract class CapturePageCallback {
-  void moveToHomePage(BuildContext context);
-  void moveToHistoryPage(BuildContext context);
-  void setCamera();
+  void moveToHistoryPage();
+  void moveToCharacterPage();
+  void moveToCameraScreen();
+  void moveToCheckScreen(String imgPath);
+  void moveToResultScreen(String imgPath, String foodName);
+  void updateHistoryPage();
+  void updateCharacterPage();
+  void loadAd();
+  void showAd();
 }
+
+enum CapturePageScreen { camera, check, result }

@@ -30,7 +30,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  go_router: ^10.0.0
   shared_preferences: ^2.5.2
 
   # The following adds the Cupertino Icons font to your application.
@@ -49,6 +48,8 @@ dependencies:
   google_generative_ai: ^0.4.6
   flutter_dotenv: ^5.2.1
   animated_text_kit: ^4.2.3
+  image: ^4.5.4
+  google_mobile_ads: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -116,7 +117,7 @@ flutter:
 flutter_icons:
   android: true
   ios: true
-  image_path: "images/character1.png"
-  adaptive_icon_background: "#d0e2be"
-  adaptive_icon_foreground: "images/character1.png"
+  image_path: "images/icon.png"
+  adaptive_icon_background: "#547f54"
+  adaptive_icon_foreground: "images/icon.png"
   remove_alpha_ios: true
