@@ -26,6 +26,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
   @override
   void initState() {
     super.initState();
+    widget.callback.loadAd();
     _checkFileExists();
     _askGemini();
   }
@@ -73,6 +74,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
 
   @override
   Future<void> moveToResultScreen() async {
+    widget.callback.showAd();
     await ImageManager().saveImageIfNecessary(widget.imgPath, rotationAngle);
     widget.callback.moveToResultScreen(widget.imgPath, foodName);
   }

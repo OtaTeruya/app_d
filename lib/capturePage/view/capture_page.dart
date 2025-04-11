@@ -1,3 +1,4 @@
+import 'package:app_d/capturePage/utils/interstitial_ad_manager.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../home/view/home.dart';
@@ -15,6 +16,7 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   CapturePageScreen focusedScreen = CapturePageScreen.camera;
   String imgPath = "";
   String foodName = "";
+  InterstitialAdManager interstitialAdManager = InterstitialAdManager();
 
   void _setIsCameraUsing(bool value) {
     widget.callback.setIsCameraUsing(value);
@@ -68,6 +70,16 @@ class _CapturePage extends State<CapturePage> implements CapturePageCallback {
   }
 
   @override
+  void loadAd() {
+    interstitialAdManager.loadAd();
+  }
+
+  @override
+  void showAd() {
+    interstitialAdManager.showAd();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return CapturePageUI(
       uiState: CapturePageUIState(
@@ -88,6 +100,8 @@ abstract class CapturePageCallback {
   void moveToResultScreen(String imgPath, String foodName);
   void updateHistoryPage();
   void updateCharacterPage();
+  void loadAd();
+  void showAd();
 }
 
 enum CapturePageScreen { camera, check, result }
