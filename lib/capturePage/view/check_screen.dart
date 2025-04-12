@@ -50,7 +50,7 @@ class _CheckScreenState extends State<CheckScreen> implements CheckScreenCallbac
       });
       return;
     }
-    List<String> resultList = result.split(',');
+    List<String> resultList = result.split('@');
     setState(() {
       isFood = resultList[0] == 'Yes' ? true : false;
       foodName = resultList[2].trimRight();
