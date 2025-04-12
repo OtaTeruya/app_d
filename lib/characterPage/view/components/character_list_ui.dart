@@ -1,5 +1,6 @@
 import 'package:app_d/characterPage/view/components/character_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../utils/character.dart';
 import '../../utils/character_manager.dart';
@@ -19,7 +20,7 @@ class CharacterListUI extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
-          Text('モンスターを選んでください'),
+          Text(AppLocalizations.of(context)!.choose_a_creature),
           Expanded(
             child: ListView(
               children: [

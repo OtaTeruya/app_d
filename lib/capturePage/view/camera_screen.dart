@@ -2,6 +2,7 @@ import 'package:app_d/capturePage/view/camera_screen_ui.dart';
 import 'package:app_d/capturePage/view/capture_page.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CameraScreen extends StatefulWidget {
   final CapturePageCallback callback;
@@ -75,8 +76,8 @@ class CameraScreenState extends State<CameraScreen> implements CameraScreenCallb
       //カメラが存在しない場合
       return Scaffold(
         body: Center(
-            child: const Text(
-              'カメラにアクセスできませんでした。',
+            child: Text(
+              AppLocalizations.of(context)!.unable_to_access_the_camera,
               style: TextStyle(color: Colors.red),
             )
         ),

@@ -1,6 +1,7 @@
 import 'package:app_d/capturePage/components/image_with_rotation.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'check_screen.dart';
 
@@ -17,21 +18,21 @@ class CheckScreenUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: uiState.geminiSuccess ? _geminiAnswer(uiState) : Center(
+      body: uiState.geminiSuccess ? _geminiAnswer(uiState, context) : Center(
         //geminiが正しい返答を返さなかった場合
         child: Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Text(
-                '時間をおいてもう一度お試しいただくか、ご利用の環境をご確認ください。',
+                AppLocalizations.of(context)!.error_try_again,
                 style: TextStyle(color: Colors.red),
                 textAlign: TextAlign.center,
               ),
             ),
             TextButton(
               onPressed: callback.recapture,
-              child: Text('撮り直す'),
+              child: Text(AppLocalizations.of(context)!.retake),
             ),
           ],
         ),
@@ -39,7 +40,7 @@ class CheckScreenUI extends StatelessWidget {
     );
   }
 
-  Widget _geminiAnswer(CheckScreenUIState uiState) {
+  Widget _geminiAnswer(CheckScreenUIState uiState, BuildContext context) {
     return SingleChildScrollView(
       child: Center(
         child: Column(
@@ -48,8 +49,8 @@ class CheckScreenUI extends StatelessWidget {
             uiState.isFood == null
                 ? CircularProgressIndicator()
                 : uiState.isFood == true
-                ? Text("画像を確認して下さい")
-                : Text("食べ物を撮影して下さい"),
+                ? Text(AppLocalizations.of(context)!.please_check_the_image)
+                : Text(AppLocalizations.of(context)!.please_take_a_photo_of_food),
             Divider(),
             SizedBox(
               height: 320,
@@ -61,8 +62,8 @@ class CheckScreenUI extends StatelessWidget {
                     imgPath: uiState.imgPath,
                     rotationAngle: uiState.rotationAngle,
                     rotateImage: callback.rotateImage,
-                    deleteImage: null) // ファイルが存在する場合
-                    : const Center(child: Text("データが存在しません"),), // ファイルが存在しない場合
+                    deleteImage: null)
+                    : Center(child: Text(AppLocalizations.of(context)!.no_data_available),),
             ),
             Gap(20),
             uiState.fileExists == true
@@ -80,7 +81,7 @@ class CheckScreenUI extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      '撮り直す',
+                      AppLocalizations.of(context)!.retake,
                       style: TextStyle(color: Colors.blueGrey),
                     ),
                   ),
@@ -94,7 +95,7 @@ class CheckScreenUI extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'これにする！',
+                      AppLocalizations.of(context)!.ok,
                       style: TextStyle(color: Colors.white),
                     ),
                   )
@@ -104,7 +105,7 @@ class CheckScreenUI extends StatelessWidget {
             )
                 : TextButton(
               onPressed: callback.recapture,
-              child: Text('撮り直す'),
+              child: Text(AppLocalizations.of(context)!.retake),
             ),
             Gap(10),
           ],
