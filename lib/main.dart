@@ -8,10 +8,8 @@ import 'home/view/home.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: ".env");
-
-  await initializeDateFormatting('ja_JP').then((_) {
-    runApp(const MyApp());
-  });
+  await initializeDateFormatting();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

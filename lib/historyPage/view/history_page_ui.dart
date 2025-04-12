@@ -3,6 +3,7 @@ import 'package:app_d/historyPage/view/widgets/photo_list.dart';
 import 'package:app_d/historyPage/view/widgets/popup.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 import 'history_page.dart';
 
@@ -23,7 +24,7 @@ class HistoryPageUI extends StatelessWidget {
               Calendar(selectedDate: uiState.selectedDate, callback: callback),
               Gap(16),
               Text(
-                '${uiState.selectedDate.month}月${uiState.selectedDate.day}日',
+                DateFormat.MMMd(Localizations.localeOf(context).toString()).format(uiState.selectedDate),
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               ),

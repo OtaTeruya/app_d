@@ -4,6 +4,7 @@ import 'package:app_d/capturePage/view/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class ResultScreenUI extends StatelessWidget {
   final ResultScreenCallback callback;
@@ -25,7 +26,7 @@ class ResultScreenUI extends StatelessWidget {
               Gap(10),
               Center(
                 child: Text(
-                  "${uiState.now.year.toString()}年${uiState.now.month.toString()}月${uiState.now.day.toString()}日",
+                    DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(uiState.now),
                   style: const TextStyle(fontSize: 20),
                 )
               ),
