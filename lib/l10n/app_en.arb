@@ -1,0 +1,27 @@
+{
+  "@@locale":"en",
+  "title": "NomNomNotes",
+
+  "capture": "Capture",
+  "notes": "Notes",
+  "feed": "Feed",
+
+  "unable_to_access_the_camera": "Unable to access the camera.",
+
+  "error_try_again": "Please try again after some time or check your environment.",
+  "retake": "Retake",
+  "please_check_the_image": "Please check the image.",
+  "please_take_a_photo_of_food": "Please take a photo of food.",
+  "no_data_available": "No data available.",
+  "ok": "OK!",
+
+  "take_another": "Take another",
+  "view_notes": "View notes",
+
+  "you_got_food": "You got food!",
+  "visit_creature": "Shall we visit creatures?",
+  "no": "No",
+  "yes": "Yes",
+
+  "choose_a_creature": "Choose a creature."
+}

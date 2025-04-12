@@ -37,7 +37,7 @@ class Calendar extends StatelessWidget {
       firstDay: DateTime.utc(2024, 1, 1),
       lastDay: DateTime.utc(2050, 1, 1),
       focusedDay: selectedDate,
-      locale: 'ja_JP',
+      locale: Localizations.localeOf(context).toString(),
       selectedDayPredicate: (day) => isSameDay(selectedDate, day),
       onDaySelected: (selectedDay, focusedDay) {
         if (!isSameDay(selectedDate, selectedDay)) {

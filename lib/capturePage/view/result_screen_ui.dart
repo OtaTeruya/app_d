@@ -3,6 +3,8 @@ import 'package:app_d/capturePage/utils/image_manager.dart';
 import 'package:app_d/capturePage/view/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 class ResultScreenUI extends StatelessWidget {
   final ResultScreenCallback callback;
@@ -24,7 +26,7 @@ class ResultScreenUI extends StatelessWidget {
               Gap(10),
               Center(
                 child: Text(
-                  "${uiState.now.year.toString()}年${uiState.now.month.toString()}月${uiState.now.day.toString()}日",
+                    DateFormat.yMMMd(Localizations.localeOf(context).toString()).format(uiState.now),
                   style: const TextStyle(fontSize: 20),
                 )
               ),
@@ -60,8 +62,7 @@ class ResultScreenUI extends StatelessWidget {
                   ) // ローディング中
                       : uiState.fileExists == true
                       ? ImageManager().getImage(uiState.imgPath) // ファイルが存在する場合
-                      : const Center(
-                    child: Text("データが存在しません"),
+                      : Center(child: Text(AppLocalizations.of(context)!.no_data_available),
                   ), // ファイルが存在しない場合
                 ),
               ),
@@ -71,11 +72,11 @@ class ResultScreenUI extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: callback.moveToCameraScreen,
-                    child: Text('もう一枚撮る'),
+                    child: Text(AppLocalizations.of(context)!.take_another),
                   ),
                   TextButton(
                     onPressed: () { callback.moveToHistoryPage(); },
-                    child: Text('日記を見る'),
+                    child: Text(AppLocalizations.of(context)!.view_notes),
                   ),
                 ],
               ),

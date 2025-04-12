@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'home.dart';
 
@@ -45,21 +46,21 @@ class HomeUI extends StatelessWidget {
                                 callback.isFocused(AppPage.capture),
                                 "images/icon_capture_focused.png",
                                 "images/icon_capture_unfocused.png",
-                                "撮影"
+                                AppLocalizations.of(context)!.capture
                             ),
                             _tabButton(
                                 callback.moveToHistoryPage,
                                 callback.isFocused(AppPage.history),
                                 "images/icon_calendar_focused.png",
                                 "images/icon_calendar_unfocused.png",
-                                "日記"
+                                AppLocalizations.of(context)!.notes
                             ),
                             _tabButton(
                                 callback.moveToCharacterPage,
                                 callback.isFocused(AppPage.character),
                                 "images/icon_character_focused.png",
                                 "images/icon_character_unfocused.png",
-                                "育成"
+                                AppLocalizations.of(context)!.feed
                             ),
                           ],
                         )

@@ -1,0 +1,27 @@
+{
+  "@@locale":"ja",
+  "title": "もぐもぐ帳",
+
+  "capture": "撮影",
+  "notes": "日記",
+  "feed": "育成",
+
+  "unable_to_access_the_camera": "カメラにアクセスできませんでした",
+
+  "error_try_again": "時間をおいてもう一度お試しいただくか、ご利用の環境をご確認ください。",
+  "retake": "撮り直す",
+  "please_check_the_image": "画像を確認して下さい",
+  "please_take_a_photo_of_food": "食べ物を撮影して下さい",
+  "no_data_available": "データが存在しません",
+  "ok": "これにする!",
+
+  "take_another": "もう一枚撮る",
+  "view_notes": "日記を見る",
+
+  "you_got_food": "えさを手に入れました！",
+  "visit_creature": "モンスターの様子を見に行く?",
+  "no": "いいえ",
+  "yes": "はい",
+
+  "choose_a_creature": "モンスターを選ぼう"
+}
