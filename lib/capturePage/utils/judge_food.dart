@@ -1,10 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 
 class JudgeFood {
-  String prompt = '''
+  String promptJa = '''
           この画像にあるものが、料理かどうかを判定して下さい。
           答え方について、以下に従って下さい。
           - 1つ目
@@ -32,14 +33,47 @@ class JudgeFood {
                 - オムレツ → 黄金のひだまり
                 - チーズフォンデュ → 黄金の滝
                 - ハンバーガー → 至高の重なる栄光
-              - 以前送信された画像と同じでも、上記を守った上で、できる限り違う料理名を考えて下さい。
-          答える時は、各要素を","で区切って下さい。
+          答える時は、各要素を"@"で区切って下さい。
           以下に解答例を示します。
-          - Yes,100,湯気に包まれた至極の瞬間
-          - No,0,Not_Food
+          - Yes@100@湯気に包まれた至極の瞬間
+          - No@0@Not_Food
         ''';
 
+  String promptEn = '''
+          Please determine whether the item in this image is food.
+          Follow the instructions below for how to answer:
+          - First part
+            - If it is food: Yes
+            - If it is not food: No
+          - Second part
+            - Write the confidence level (0 to 100) that the item is food.
+          - Third part
+            - Come up with a name for the dish shown in the image, following the rules below:
+              - These rules are listed in order of priority; higher rules take precedence. Please follow all rules.
+              - Only come up with a name if the item is determined to be food. If it is not food, write "Not_Food".
+              - Do not include anything that is offensive or inappropriate.
+              - The name must be in English.
+              - The name must be only one.
+              - The name must capture the characteristics of the dish shown in the image.
+              - The name must be indirect or euphemistic.
+              - The name should be funny and make use of the visual appearance of the dish.
+              - The name must be imaginative enough that one can picture the food from it.
+              - Please format the name similarly to the following examples. These are just examples and do not need to be strictly followed, but the name must reflect the characteristics of the dish in the image.
+                Examples:
+                - Rice ball → Shining Silver Crystal
+                - Instant noodles → A Supreme Moment Wrapped in Steam
+                - Salad → Green Oasis
+                - Omelette → Golden Sunshine
+                - Cheese fondue → Golden Waterfall
+                - Hamburger → Layered Glory of Perfection
+          - When answering, separate each element with "@".
+          - Here are some example responses:
+          - Yes@100@Golden Sunshine
+          - No@0@Not_Food
+  ''';
+
   Future<String> judge(String imgPath) async {
+    Locale locale = WidgetsBinding.instance.platformDispatcher.locale;
     try {
       var apiKey = dotenv.get('GEMINI_API_KEY', fallback: '');
       if (apiKey.isEmpty) {
@@ -56,7 +90,7 @@ class JudgeFood {
       );
       final content = [
         Content.multi([
-          TextPart(prompt),
+          TextPart(locale.languageCode == 'ja' ? promptJa : promptEn),
           DataPart(getMimeType(imgPath), bytes),
         ]),
       ];
